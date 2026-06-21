@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -15,8 +17,14 @@ public class Main extends Game {
 	public BitmapFont titleFont;
 	public FitViewport viewport;
     FreeTypeFontGenerator generator;
+    Skin CurrentSkin;
+    Stage stage;
+
     @Override
     public void create() {
+
+        CurrentSkin = new Skin(Gdx.files.internal("uiskin.json"));
+        stage = new Stage();
 
 		batch = new SpriteBatch();
 
@@ -35,6 +43,8 @@ public class Main extends Game {
         titleFont.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());
 
         setScreen(new MainMenu(this));
+        //this was for testing config, might be needed again
+        //new Config();
     }
 
     public void render() {
