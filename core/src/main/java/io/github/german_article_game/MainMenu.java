@@ -140,21 +140,20 @@ public class MainMenu implements Screen {
         // Prepare your screen here.
     }
 
-    @Override
-    public void render(float delta) {
+@Override
+public void render(float delta) {
+    ScreenUtils.clear(Color.ROYAL);
 
-        ScreenUtils.clear(Color.ROYAL);
+    game.viewport.apply();
+    game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
+    game.batch.begin();
+    game.titleFont.draw(game.batch, "What Article Do I Use Again?", 2.5f, 4.25f);
+    game.batch.end();
 
-		game.viewport.apply();
-		game.batch.setProjectionMatrix(game.viewport.getCamera().combined);    
-
-        game.batch.begin();
-        game.titleFont.draw(game.batch, "What Article Do I Use Again?", 2.5f, 4.25f);
-		game.batch.end();
-
-        game.stage.act(delta);
-        game.stage.draw();
-    }
+    game.stage.getViewport().apply();  // re-apply stage viewport before drawing
+    game.stage.act(delta);
+    game.stage.draw();
+}
 
     @Override
     public void resize(int width, int height) {
