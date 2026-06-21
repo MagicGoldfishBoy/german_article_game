@@ -1,9 +1,18 @@
 package io.github.german_article_game;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.ScreenUtils;
 
 /** First screen of the application. Displayed after the application is created. */
-public class FirstScreen implements Screen {
+public class MainMenu implements Screen {
+
+    final Main game;
+
+    public MainMenu(Main game) {
+        this.game = game;
+    }
+    
     @Override
     public void show() {
         // Prepare your screen here.
@@ -11,7 +20,15 @@ public class FirstScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        // Draw your screen here. "delta" is the time since last render in seconds.
+
+        ScreenUtils.clear(Color.ROYAL);
+
+		game.viewport.apply();
+		game.batch.setProjectionMatrix(game.viewport.getCamera().combined);    
+
+        game.batch.begin();
+        game.font.draw(game.batch, "What Article Do I Use Again?", 1, 4.25f);
+		game.batch.end();
     }
 
     @Override
@@ -21,6 +38,7 @@ public class FirstScreen implements Screen {
         if(width <= 0 || height <= 0) return;
 
         // Resize your screen here. The parameters represent the new window size.
+        game.viewport.update(width, height, true);
     }
 
     @Override
