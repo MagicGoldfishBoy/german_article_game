@@ -27,7 +27,7 @@ public class MainMenu implements Screen {
 		game.batch.setProjectionMatrix(game.viewport.getCamera().combined);    
 
         game.batch.begin();
-        game.font.draw(game.batch, "What Article Do I Use Again?", 1, 4.25f);
+        game.titleFont.draw(game.batch, "What Article Do I Use Again?", 1, 4.25f);
 		game.batch.end();
     }
 
