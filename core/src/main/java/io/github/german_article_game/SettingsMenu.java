@@ -19,28 +19,20 @@ import io.github.orioncraftmc.meditate.enums.YogaEdge;
 import io.github.orioncraftmc.meditate.enums.YogaFlexDirection;
 import io.github.orioncraftmc.meditate.enums.YogaWrap;
 
-/** First screen of the application. Displayed after the application is created. */
-public class MainMenu implements Screen {
+public class SettingsMenu implements Screen {
 
     final Main game;
 
-    FlexBox mainMenuFlexbox;
+    FlexBox settingsMenuFlexbox;
 
     TextureAtlas atlas;
 
     Skin CurrentSkin;
 
-    YogaNode playNode;
-    TextButton playButton;
+    YogaNode backNode;
+    TextButton backButton;
 
-    YogaNode settingsNode;
-    TextButton settingsButton;
-
-    YogaNode exitNode;
-    TextButton exitButton;
-
-    public MainMenu(Main game) {
-        
+    public SettingsMenu(Main game) {
         this.game = game;
 
         InputMultiplexer multiplexer = new InputMultiplexer();
@@ -52,13 +44,13 @@ public class MainMenu implements Screen {
         atlas = new TextureAtlas("ui/uiskin.atlas");
             CurrentSkin.addRegions(atlas);
 
-
-        mainMenuFlexbox = new FlexBox();
-        mainMenuFlexbox.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        mainMenuFlexbox.getRoot()
-            .setFlexDirection(YogaFlexDirection.ROW)
+        settingsMenuFlexbox = new FlexBox();
+        settingsMenuFlexbox.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        settingsMenuFlexbox.getRoot()
+            .setFlexDirection(YogaFlexDirection.COLUMN)
             .setWrap(YogaWrap.WRAP);
-        game.stage.addActor(mainMenuFlexbox);
+        game.stage.addActor(settingsMenuFlexbox);
+
 
         TextButtonStyle defaultStyle = new TextButtonStyle();
             defaultStyle.font = CurrentSkin.getFont("default-font");
@@ -67,77 +59,31 @@ public class MainMenu implements Screen {
             defaultStyle.over = CurrentSkin.newDrawable("button-normal-over");
             defaultStyle.down = CurrentSkin.newDrawable("button-normal-pressed");
 
+        backButton = new TextButton("Back", defaultStyle);
+        backButton.getLabel().setFontScale(1.5f);
 
-        playButton = new TextButton("Play", defaultStyle);
-        playButton.getLabel().setFontScale(1.5f);
-
-        playNode = mainMenuFlexbox.add(playButton)
-            .setFlexDirection(YogaFlexDirection.ROW)
+        backNode = settingsMenuFlexbox.add(backButton)
+            .setFlexDirection(YogaFlexDirection.COLUMN)
             .setBorder(YogaEdge.ALL, 25)
             .setMargin(YogaEdge.LEFT, 50)
-            .setMargin(YogaEdge.TOP, 350)
+            .setMargin(YogaEdge.TOP, 50)
             .setWidth(150)
             .setHeight(75);
 
-        playButton.addListener(playListener);
-        playButton.setTouchable(Touchable.enabled);
-
-
-        settingsButton = new TextButton("Settings", defaultStyle);
-        settingsButton.getLabel().setFontScale(1.5f);
-
-        settingsNode = mainMenuFlexbox.add(settingsButton)
-            .setFlexDirection(YogaFlexDirection.ROW)
-            .setBorder(YogaEdge.ALL, 25)
-            .setMargin(YogaEdge.LEFT, 50)
-            .setMargin(YogaEdge.TOP, 350)
-            .setWidth(150)
-            .setHeight(75);
-
-        settingsButton.addListener(settingsListener);
-        settingsButton.setTouchable(Touchable.enabled);
-        
-
-        exitButton = new TextButton("Exit", defaultStyle);
-        exitButton.getLabel().setFontScale(1.5f);
-
-        exitNode = mainMenuFlexbox.add(exitButton)
-            .setFlexDirection(YogaFlexDirection.ROW)
-            .setBorder(YogaEdge.ALL, 25)
-            .setMargin(YogaEdge.LEFT, 50)
-            .setMargin(YogaEdge.TOP, 350)
-            .setWidth(150)
-            .setHeight(75);
-
-        exitButton.addListener(exitListener);
-        exitButton.setTouchable(Touchable.enabled);
+        backButton.addListener(backListener);
+        backButton.setTouchable(Touchable.enabled);
     }
 
-    ClickListener playListener = new ClickListener() {
-        @Override
-        public void clicked(InputEvent event, float x, float y) {
-            System.out.println("Play button clicked");
-        }
-    };
-
-    ClickListener settingsListener = new ClickListener() {
+    ClickListener backListener = new ClickListener() {
         @Override
         public void clicked(InputEvent event, float x, float y) {
             dispose();
-            game.setScreen(new SettingsMenu(game));
+            game.setScreen(new MainMenu(game));
         }
     };
 
-    ClickListener exitListener = new ClickListener() {
-        @Override
-        public void clicked(InputEvent event, float x, float y) {
-            Gdx.app.exit();
-        }
-    };
-    
     @Override
     public void show() {
-        // Prepare your screen here.
     }
 
     @Override
@@ -147,7 +93,7 @@ public class MainMenu implements Screen {
         game.viewport.apply();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.begin();
-        game.titleFont.draw(game.batch, "What Article Do I Use Again?", 2.5f, 4.25f);
+        //game.titleFont.draw(game.batch, "What Article Do I Use Again?", 2.5f, 4.25f);
         game.batch.end();
 
         game.stage.getViewport().apply();  // re-apply stage viewport before drawing
@@ -162,27 +108,23 @@ public class MainMenu implements Screen {
 
         game.stage.getViewport().update(width, height, true);        
         game.viewport.update(width, height, true);
-
     }
 
     @Override
     public void pause() {
-        // This screen can't be paused, but I had to put this here because the screen interface demands it
     }
 
     @Override
     public void resume() {
-        // See above
     }
 
     @Override
     public void hide() {
-        // This method is called when another screen replaces this one.
     }
 
     @Override
     public void dispose() {
         game.stage.clear();
-        mainMenuFlexbox.clear();
+        settingsMenuFlexbox.clear();
     }
 }

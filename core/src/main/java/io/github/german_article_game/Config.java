@@ -11,7 +11,18 @@ import com.esotericsoftware.kryo.io.Output;
 public class Config {
 
     Kryo kryo = new Kryo();
+
     Boolean includeEnglishTranslation = true;
+
+    Boolean debugMode = false;
+
+    enum Difficulty {
+        EASY,
+        MEDIUM,
+        HARD
+    }
+
+    Difficulty difficulty = Difficulty.EASY;
 
     public Config() {
         try (Output output = new Output(new FileOutputStream("config.bin"))) {
