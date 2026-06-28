@@ -26,33 +26,32 @@ public class Config {
     Difficulty difficulty = Difficulty.EASY;
 
     public Config() {
-        // try (Output output = new Output(new FileOutputStream("config.bin"))) {
-        //     kryo.writeObject(output, includeEnglishTranslation);
-        // } catch (FileNotFoundException e) {
-        //     throw new RuntimeException(e);
-        // }
-
-        // try (Input input = new Input(new FileInputStream("config.bin"))) {
-        //     includeEnglishTranslation = kryo.readObject(input, Boolean.class);
-        //     System.out.println("is english on: " + includeEnglishTranslation.toString());
-        // } catch (FileNotFoundException e) {
-        //     throw new RuntimeException(e);
-        // }
+        kryo.register(Enum.class);
+        kryo.register(Difficulty.class);
     }
 
     public void useDefaultValues() {
 
         includeEnglishTranslation = true;
         debugMode = false;
+        difficulty = Difficulty.EASY;
 
     }
 
     public void createNewConfigFile() {
         try (Output output = new Output(new FileOutputStream("config.bin"))) {
+
             System.out.println("Creating new Config file with default values");
+
             kryo.writeObject(output, includeEnglishTranslation);
+            System.out.println("is english on: " + includeEnglishTranslation.toString());
+
             kryo.writeObject(output, debugMode);
             System.out.println("is debug on: " + debugMode.toString());
+
+            kryo.writeObject(output, difficulty);
+            System.out.println("difficulty: " + difficulty);
+
         } catch (FileNotFoundException e) {
             System.out.println(e);
         }   
@@ -61,11 +60,15 @@ public class Config {
     public void loadAllSettings() {
 
         try (Input input = new Input(new FileInputStream("config.bin"))) {
+
             includeEnglishTranslation = kryo.readObject(input, Boolean.class);
             System.out.println("is english on: " + includeEnglishTranslation.toString());
 
             debugMode = kryo.readObject(input, Boolean.class);
             System.out.println("is debug on: " + debugMode.toString());
+
+            difficulty = kryo.readObject(input, Difficulty.class);
+            System.out.println("difficulty: " + difficulty);
 
         } catch (FileNotFoundException e) {
             System.out.println("Config file not found. Default values will be used.");
