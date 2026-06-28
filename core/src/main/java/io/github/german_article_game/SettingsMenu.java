@@ -7,8 +7,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -33,6 +35,9 @@ public class SettingsMenu implements Screen {
 
     YogaNode backNode;
     TextButton backButton;
+
+    YogaNode includeEnglishTranslationTextNode;
+    Label includeEnglishTranslationLabel;
 
     public SettingsMenu(Main game) {
         this.game = game;
@@ -73,6 +78,25 @@ public class SettingsMenu implements Screen {
 
         backButton.addListener(backListener);
         backButton.setTouchable(Touchable.enabled);
+
+
+        LabelStyle defaultLableStyle = new LabelStyle();
+            defaultLableStyle.font = game.buttonFont;
+            defaultLableStyle.fontColor = Color.SKY;
+            defaultLableStyle.background = CurrentSkin.newDrawable("textfield");
+
+        includeEnglishTranslationLabel = new Label("Include English Translation", defaultLableStyle);
+        includeEnglishTranslationLabel.setAlignment(1);
+        includeEnglishTranslationLabel.setFontScale(0.5f);
+        includeEnglishTranslationLabel.setColor(Color.BLUE);
+
+        includeEnglishTranslationTextNode = settingsMenuFlexbox.add(includeEnglishTranslationLabel)
+            .setAlignContent(YogaAlign.CENTER)
+            .setWidthPercent(40)
+            .setHeightPercent(5)
+            .setMarginPercent(YogaEdge.LEFT, 2)
+            .setMarginPercent(YogaEdge.BOTTOM, 2);
+        
     }
 
     ClickListener backListener = new ClickListener() {
@@ -108,6 +132,7 @@ public class SettingsMenu implements Screen {
         if(width <= 0 || height <= 0) return;
 
         backButton.getLabel().setFontScale(width * 0.0005f, height * 0.0005f);
+        includeEnglishTranslationLabel.setFontScale(width * 0.0004f, height * 0.0004f);
 
         game.stage.getViewport().update(width, height, true);        
         game.viewport.update(width, height, true);
