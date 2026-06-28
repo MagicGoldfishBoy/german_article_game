@@ -15,8 +15,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import dev.lyze.flexbox.FlexBox;
 import io.github.orioncraftmc.meditate.YogaNode;
+import io.github.orioncraftmc.meditate.enums.YogaAlign;
 import io.github.orioncraftmc.meditate.enums.YogaEdge;
 import io.github.orioncraftmc.meditate.enums.YogaFlexDirection;
+import io.github.orioncraftmc.meditate.enums.YogaJustify;
 import io.github.orioncraftmc.meditate.enums.YogaWrap;
 
 public class SettingsMenu implements Screen {
@@ -47,28 +49,27 @@ public class SettingsMenu implements Screen {
         settingsMenuFlexbox = new FlexBox();
         settingsMenuFlexbox.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         settingsMenuFlexbox.getRoot()
-            .setFlexDirection(YogaFlexDirection.COLUMN)
-            .setWrap(YogaWrap.WRAP);
+            .setFlexDirection(YogaFlexDirection.COLUMN)  
+            .setWrap(YogaWrap.NO_WRAP)
+            .setAlignItems(YogaAlign.FLEX_START)              
+            .setJustifyContent(YogaJustify.FLEX_START);   
         game.stage.addActor(settingsMenuFlexbox);
 
 
         TextButtonStyle defaultStyle = new TextButtonStyle();
-            defaultStyle.font = CurrentSkin.getFont("default-font");
-            defaultStyle.fontColor = Color.BROWN;
+            defaultStyle.font = game.buttonFont;
+            defaultStyle.fontColor = Color.WHITE;
             defaultStyle.up = CurrentSkin.newDrawable("button-normal");
             defaultStyle.over = CurrentSkin.newDrawable("button-normal-over");
             defaultStyle.down = CurrentSkin.newDrawable("button-normal-pressed");
 
         backButton = new TextButton("Back", defaultStyle);
-        backButton.getLabel().setFontScale(1.5f);
+        backButton.getLabel().setFontScale(1);
 
         backNode = settingsMenuFlexbox.add(backButton)
-            .setFlexDirection(YogaFlexDirection.COLUMN)
-            .setBorder(YogaEdge.ALL, 25)
-            .setMargin(YogaEdge.LEFT, 50)
-            .setMargin(YogaEdge.TOP, 50)
-            .setWidth(150)
-            .setHeight(75);
+            .setWidthPercent(15)
+            .setHeightPercent(10)
+            .setMarginPercent(YogaEdge.BOTTOM, 2);
 
         backButton.addListener(backListener);
         backButton.setTouchable(Touchable.enabled);
@@ -106,8 +107,14 @@ public class SettingsMenu implements Screen {
 
         if(width <= 0 || height <= 0) return;
 
+        backButton.getLabel().setFontScale(width * 0.0005f, height * 0.0005f);
+
         game.stage.getViewport().update(width, height, true);        
         game.viewport.update(width, height, true);
+
+        settingsMenuFlexbox.setSize(width, height);
+        settingsMenuFlexbox.invalidate();
+        settingsMenuFlexbox.layout();
     }
 
     @Override

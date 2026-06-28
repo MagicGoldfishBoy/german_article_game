@@ -15,8 +15,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import dev.lyze.flexbox.FlexBox;
 import io.github.orioncraftmc.meditate.YogaNode;
+import io.github.orioncraftmc.meditate.enums.YogaAlign;
 import io.github.orioncraftmc.meditate.enums.YogaEdge;
 import io.github.orioncraftmc.meditate.enums.YogaFlexDirection;
+import io.github.orioncraftmc.meditate.enums.YogaJustify;
 import io.github.orioncraftmc.meditate.enums.YogaWrap;
 
 /** First screen of the application. Displayed after the application is created. */
@@ -56,62 +58,53 @@ public class MainMenu implements Screen {
         mainMenuFlexbox = new FlexBox();
         mainMenuFlexbox.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         mainMenuFlexbox.getRoot()
-            .setFlexDirection(YogaFlexDirection.ROW)
-            .setWrap(YogaWrap.WRAP);
+            .setFlexDirection(YogaFlexDirection.COLUMN)  
+            .setWrap(YogaWrap.NO_WRAP)
+            .setAlignItems(YogaAlign.CENTER)              
+            .setJustifyContent(YogaJustify.CENTER);   
         game.stage.addActor(mainMenuFlexbox);
 
         TextButtonStyle defaultStyle = new TextButtonStyle();
-            defaultStyle.font = CurrentSkin.getFont("default-font");
-            defaultStyle.fontColor = Color.BROWN;
+            defaultStyle.font = game.buttonFont;
+            defaultStyle.fontColor = Color.WHITE;
             defaultStyle.up = CurrentSkin.newDrawable("button-normal");
             defaultStyle.over = CurrentSkin.newDrawable("button-normal-over");
             defaultStyle.down = CurrentSkin.newDrawable("button-normal-pressed");
 
 
         playButton = new TextButton("Play", defaultStyle);
-        playButton.getLabel().setFontScale(1.5f);
+        playButton.getLabel().setFontScale(1);
 
         playNode = mainMenuFlexbox.add(playButton)
-            .setFlexDirection(YogaFlexDirection.ROW)
-            .setBorder(YogaEdge.ALL, 25)
-            .setMargin(YogaEdge.LEFT, 50)
-            .setMargin(YogaEdge.TOP, 350)
-            .setWidth(150)
-            .setHeight(75);
+            .setWidthPercent(25)
+            .setHeightPercent(10)
+            .setMarginPercent(YogaEdge.BOTTOM, 2);
 
-        playButton.addListener(playListener);
-        playButton.setTouchable(Touchable.enabled);
+                playButton.addListener(playListener);
+                playButton.setTouchable(Touchable.enabled);
 
 
-        settingsButton = new TextButton("Settings", defaultStyle);
-        settingsButton.getLabel().setFontScale(1.5f);
+                settingsButton = new TextButton("Settings", defaultStyle);
+                settingsButton.getLabel().setFontScale(1);
 
         settingsNode = mainMenuFlexbox.add(settingsButton)
-            .setFlexDirection(YogaFlexDirection.ROW)
-            .setBorder(YogaEdge.ALL, 25)
-            .setMargin(YogaEdge.LEFT, 50)
-            .setMargin(YogaEdge.TOP, 350)
-            .setWidth(150)
-            .setHeight(75);
+            .setWidthPercent(25)
+            .setHeightPercent(10)
+            .setMarginPercent(YogaEdge.BOTTOM, 2);
 
-        settingsButton.addListener(settingsListener);
-        settingsButton.setTouchable(Touchable.enabled);
-        
+                settingsButton.addListener(settingsListener);
+                settingsButton.setTouchable(Touchable.enabled);
+                
 
-        exitButton = new TextButton("Exit", defaultStyle);
-        exitButton.getLabel().setFontScale(1.5f);
+                exitButton = new TextButton("Exit", defaultStyle);
+                exitButton.getLabel().setFontScale(1);
 
         exitNode = mainMenuFlexbox.add(exitButton)
-            .setFlexDirection(YogaFlexDirection.ROW)
-            .setBorder(YogaEdge.ALL, 25)
-            .setMargin(YogaEdge.LEFT, 50)
-            .setMargin(YogaEdge.TOP, 350)
-            .setWidth(150)
-            .setHeight(75);
-
-        exitButton.addListener(exitListener);
-        exitButton.setTouchable(Touchable.enabled);
-    }
+            .setWidthPercent(25)
+            .setHeightPercent(10);
+                exitButton.addListener(exitListener);
+                exitButton.setTouchable(Touchable.enabled);
+            }
 
     ClickListener playListener = new ClickListener() {
         @Override
@@ -159,9 +152,16 @@ public class MainMenu implements Screen {
     public void resize(int width, int height) {
 
         if(width <= 0 || height <= 0) return;
-
+        playButton.getLabel().setFontScale(width * 0.0005f, height * 0.0005f);
+        settingsButton.getLabel().setFontScale(width * 0.0005f, height * 0.0005f);
+        exitButton.getLabel().setFontScale(width * 0.0005f, height * 0.0005f);
+        
         game.stage.getViewport().update(width, height, true);        
         game.viewport.update(width, height, true);
+
+        mainMenuFlexbox.setSize(width, height);
+        mainMenuFlexbox.invalidate();
+        mainMenuFlexbox.layout();
 
     }
 
