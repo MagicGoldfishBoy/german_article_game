@@ -53,9 +53,11 @@ public class Main extends Game {
 
         buttonFont.setUseIntegerPositions(false);
 
+        Config config = new Config();
+        config.loadAllSettings();
+        //config.createNewConfigFile();
+
         setScreen(new MainMenu(this));
-        //this was for testing config, might be needed again
-        //new Config();
     }
 
     public void render() {
