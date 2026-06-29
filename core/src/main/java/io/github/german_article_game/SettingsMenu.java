@@ -106,6 +106,10 @@ public class SettingsMenu implements Screen {
             .setHeightPercent(5)
             .setMarginPercent(YogaEdge.LEFT, 2)
             .setMarginPercent(YogaEdge.BOTTOM, 2);
+
+        includeEnglishTranslationCheckBox.addListener(includeEnglishListener);
+
+        includeEnglishTranslationCheckBox.setChecked(Config.includeEnglishTranslation);
         
     }
 
@@ -114,6 +118,16 @@ public class SettingsMenu implements Screen {
         public void clicked(InputEvent event, float x, float y) {
             dispose();
             game.setScreen(new MainMenu(game));
+        }
+    };
+
+    ClickListener includeEnglishListener = new ClickListener() {
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            Config.includeEnglishTranslation = !Config.includeEnglishTranslation;
+            includeEnglishTranslationCheckBox.setChecked(Config.includeEnglishTranslation);
+            Config config = new Config();
+            config.createNewConfigFile();
         }
     };
 
