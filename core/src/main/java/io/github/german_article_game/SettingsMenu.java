@@ -7,12 +7,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import dev.lyze.flexbox.FlexBox;
@@ -36,8 +39,8 @@ public class SettingsMenu implements Screen {
     YogaNode backNode;
     TextButton backButton;
 
-    YogaNode includeEnglishTranslationTextNode;
-    Label includeEnglishTranslationLabel;
+    YogaNode includeEnglishTranslationCheckBoxNode;
+    CheckBox includeEnglishTranslationCheckBox;
 
     public SettingsMenu(Main game) {
         this.game = game;
@@ -80,19 +83,26 @@ public class SettingsMenu implements Screen {
         backButton.setTouchable(Touchable.enabled);
 
 
-        LabelStyle defaultLableStyle = new LabelStyle();
-            defaultLableStyle.font = game.buttonFont;
-            defaultLableStyle.fontColor = Color.SKY;
-            defaultLableStyle.background = CurrentSkin.newDrawable("textfield");
+        Drawable checkOff = CurrentSkin.newDrawable("checkbox");
+        checkOff.setMinWidth(32);
+        checkOff.setMinHeight(32);
 
-        includeEnglishTranslationLabel = new Label("Include English Translation", defaultLableStyle);
-        includeEnglishTranslationLabel.setAlignment(1);
-        includeEnglishTranslationLabel.setFontScale(0.5f);
-        includeEnglishTranslationLabel.setColor(Color.BLUE);
+        Drawable checkOn = CurrentSkin.newDrawable("checkbox-selected");
+        checkOn.setMinWidth(32);
+        checkOn.setMinHeight(32);
 
-        includeEnglishTranslationTextNode = settingsMenuFlexbox.add(includeEnglishTranslationLabel)
+        CheckBoxStyle defaultCheckBoxStyle = new CheckBoxStyle();
+            defaultCheckBoxStyle.font = game.buttonFont;
+            defaultCheckBoxStyle.fontColor = Color.SKY;
+            defaultCheckBoxStyle.checkboxOff = CurrentSkin.newDrawable(checkOff);
+            defaultCheckBoxStyle.checkboxOn = CurrentSkin.newDrawable(checkOn);
+
+        includeEnglishTranslationCheckBox = new CheckBox("Include English Translation", defaultCheckBoxStyle);
+        includeEnglishTranslationCheckBox.getLabel().setFontScale(0.75f);
+
+        includeEnglishTranslationCheckBoxNode = settingsMenuFlexbox.add(includeEnglishTranslationCheckBox)
             .setAlignContent(YogaAlign.CENTER)
-            .setWidthPercent(40)
+            .setWidthPercent(5)
             .setHeightPercent(5)
             .setMarginPercent(YogaEdge.LEFT, 2)
             .setMarginPercent(YogaEdge.BOTTOM, 2);
@@ -106,6 +116,24 @@ public class SettingsMenu implements Screen {
             game.setScreen(new MainMenu(game));
         }
     };
+
+    private void updateCheckBoxStyle(int width, int height) {
+        float size = Math.min(width, height) * 0.04f; // 4% of the smaller dimension
+
+        Drawable checkOff = CurrentSkin.newDrawable("checkbox");
+        checkOff.setMinWidth(size);
+        checkOff.setMinHeight(size);
+
+        Drawable checkOn = CurrentSkin.newDrawable("checkbox-selected");
+        checkOn.setMinWidth(size);
+        checkOn.setMinHeight(size);
+
+        CheckBoxStyle style = includeEnglishTranslationCheckBox.getStyle();
+        style.checkboxOff = checkOff;
+        style.checkboxOn = checkOn;
+
+        includeEnglishTranslationCheckBox.setStyle(style); // forces layout refresh
+    }
 
     @Override
     public void show() {
@@ -132,7 +160,9 @@ public class SettingsMenu implements Screen {
         if(width <= 0 || height <= 0) return;
 
         backButton.getLabel().setFontScale(width * 0.0005f, height * 0.0005f);
-        includeEnglishTranslationLabel.setFontScale(width * 0.0004f, height * 0.0004f);
+
+        includeEnglishTranslationCheckBox.getLabel().setFontScale(width * 0.0004f, height * 0.0004f);
+        updateCheckBoxStyle(width, height);
 
         game.stage.getViewport().update(width, height, true);        
         game.viewport.update(width, height, true);
