@@ -15,7 +15,7 @@ public class Config {
 
     static Boolean includeEnglishTranslation = true;
 
-    Boolean debugMode = false;
+    static Boolean isDebugMode = false;
 
     enum Difficulty {
         EASY,
@@ -33,7 +33,7 @@ public class Config {
     public void useDefaultValues() {
 
         includeEnglishTranslation = true;
-        debugMode = false;
+        isDebugMode = false;
         difficulty = Difficulty.EASY;
 
     }
@@ -46,8 +46,8 @@ public class Config {
             kryo.writeObject(output, includeEnglishTranslation);
             System.out.println("is english on: " + includeEnglishTranslation.toString());
 
-            kryo.writeObject(output, debugMode);
-            System.out.println("is debug on: " + debugMode.toString());
+            kryo.writeObject(output, isDebugMode);
+            System.out.println("is debug on: " + isDebugMode.toString());
 
             kryo.writeObject(output, difficulty);
             System.out.println("difficulty: " + difficulty);
@@ -64,8 +64,8 @@ public class Config {
             includeEnglishTranslation = kryo.readObject(input, Boolean.class);
             System.out.println("is english on: " + includeEnglishTranslation.toString());
 
-            debugMode = kryo.readObject(input, Boolean.class);
-            System.out.println("is debug on: " + debugMode.toString());
+            isDebugMode = kryo.readObject(input, Boolean.class);
+            System.out.println("is debug on: " + isDebugMode.toString());
 
             difficulty = kryo.readObject(input, Difficulty.class);
             System.out.println("difficulty: " + difficulty);

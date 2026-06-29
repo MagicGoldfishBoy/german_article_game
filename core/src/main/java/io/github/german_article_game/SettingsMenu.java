@@ -42,6 +42,10 @@ public class SettingsMenu implements Screen {
     YogaNode includeEnglishTranslationCheckBoxNode;
     CheckBox includeEnglishTranslationCheckBox;
 
+    YogaNode isDebugCheckBoxNode;
+    CheckBox isDebugCheckBox;
+
+
     public SettingsMenu(Main game) {
         this.game = game;
 
@@ -97,6 +101,7 @@ public class SettingsMenu implements Screen {
             defaultCheckBoxStyle.checkboxOff = CurrentSkin.newDrawable(checkOff);
             defaultCheckBoxStyle.checkboxOn = CurrentSkin.newDrawable(checkOn);
 
+
         includeEnglishTranslationCheckBox = new CheckBox("Include English Translation", defaultCheckBoxStyle);
         includeEnglishTranslationCheckBox.getLabel().setFontScale(0.75f);
 
@@ -110,7 +115,21 @@ public class SettingsMenu implements Screen {
         includeEnglishTranslationCheckBox.addListener(includeEnglishListener);
 
         includeEnglishTranslationCheckBox.setChecked(Config.includeEnglishTranslation);
+
+
+        isDebugCheckBox = new CheckBox("Debug Mode", defaultCheckBoxStyle);
+        isDebugCheckBox.getLabel().setFontScale(0.75f);
         
+        isDebugCheckBoxNode = settingsMenuFlexbox.add(isDebugCheckBox)
+            .setAlignContent(YogaAlign.CENTER)
+            .setWidthPercent(5)
+            .setHeightPercent(5)
+            .setMarginPercent(YogaEdge.LEFT, 2)
+            .setMarginPercent(YogaEdge.BOTTOM, 2);
+
+        isDebugCheckBox.addListener(isDebugListener);
+        isDebugCheckBox.setChecked(Config.isDebugMode);
+
     }
 
     ClickListener backListener = new ClickListener() {
@@ -120,12 +139,20 @@ public class SettingsMenu implements Screen {
             game.setScreen(new MainMenu(game));
         }
     };
-
     ClickListener includeEnglishListener = new ClickListener() {
         @Override
         public void clicked(InputEvent event, float x, float y) {
             Config.includeEnglishTranslation = !Config.includeEnglishTranslation;
             includeEnglishTranslationCheckBox.setChecked(Config.includeEnglishTranslation);
+            Config config = new Config();
+            config.createNewConfigFile();
+        }
+    };
+    ClickListener isDebugListener = new ClickListener() {
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            Config.isDebugMode = !Config.isDebugMode;
+            isDebugCheckBox.setChecked(Config.isDebugMode);
             Config config = new Config();
             config.createNewConfigFile();
         }
@@ -176,6 +203,10 @@ public class SettingsMenu implements Screen {
         backButton.getLabel().setFontScale(width * 0.0005f, height * 0.0005f);
 
         includeEnglishTranslationCheckBox.getLabel().setFontScale(width * 0.0004f, height * 0.0004f);
+
+        isDebugCheckBox.getLabel().setFontScale(width * 0.0004f, height * 0.0004f);
+
+        
         updateCheckBoxStyle(width, height);
 
         game.stage.getViewport().update(width, height, true);        
