@@ -234,6 +234,8 @@ public class SettingsMenu implements Screen {
 
         isDebugCheckBox.getLabel().setFontScale(width * 0.0004f, height * 0.0004f);
 
+        difficultySelectBox.getStyle().font.getData().setScale(width * 0.001f, height * 0.001f);
+
 
         updateCheckBoxStyle(width, height);
 
