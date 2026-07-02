@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import dev.lyze.flexbox.FlexBox;
 import io.github.orioncraftmc.meditate.YogaNode;
 import io.github.orioncraftmc.meditate.enums.YogaAlign;
+import io.github.orioncraftmc.meditate.enums.YogaDirection;
 import io.github.orioncraftmc.meditate.enums.YogaEdge;
 import io.github.orioncraftmc.meditate.enums.YogaFlexDirection;
 import io.github.orioncraftmc.meditate.enums.YogaJustify;
@@ -45,6 +47,9 @@ public class SettingsMenu implements Screen {
     YogaNode isDebugCheckBoxNode;
     CheckBox isDebugCheckBox;
 
+    YogaNode difficultySelectLabelNode;
+    Label difficultySelectLabel;
+
     YogaNode difficultySelectBoxNode;
     SelectBox<Config.Difficulty> difficultySelectBox;
 
@@ -65,7 +70,7 @@ public class SettingsMenu implements Screen {
         settingsMenuFlexbox.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         settingsMenuFlexbox.getRoot()
             .setFlexDirection(YogaFlexDirection.COLUMN)  
-            .setWrap(YogaWrap.NO_WRAP)
+            .setWrap(YogaWrap.WRAP)
             .setAlignItems(YogaAlign.FLEX_START)              
             .setJustifyContent(YogaJustify.FLEX_START);   
         game.stage.addActor(settingsMenuFlexbox);
@@ -123,6 +128,7 @@ public class SettingsMenu implements Screen {
         isDebugCheckBox = new CheckBox("Debug Mode", defaultCheckBoxStyle);
         isDebugCheckBox.getLabel().setFontScale(0.75f);
         
+        
         isDebugCheckBoxNode = settingsMenuFlexbox.add(isDebugCheckBox)
             .setAlignContent(YogaAlign.CENTER)
             .setWidthPercent(5)
@@ -134,16 +140,31 @@ public class SettingsMenu implements Screen {
         isDebugCheckBox.setChecked(Config.isDebugMode);
 
 
+        difficultySelectLabel = new Label("Difficulty:", new Label.LabelStyle(game.buttonFont, Color.SKY));
+        difficultySelectLabel.getStyle().font.getData().setScale(0.75f);
+        
+
+        difficultySelectLabelNode = settingsMenuFlexbox.add(difficultySelectLabel)
+            .setAlignContent(YogaAlign.CENTER)
+            .setWidthPercent(5)
+            .setHeightPercent(5)
+            .setMarginPercent(YogaEdge.LEFT, 2)
+            .setMarginPercent(YogaEdge.BOTTOM, 2);
+//add more nodes to put the select box and label on the same line
+
         difficultySelectBox = new SelectBox<>(CurrentSkin);
-        difficultySelectBox.setItems(Config.Difficulty.values());
-        
-        
+            difficultySelectBox.setItems(Config.Difficulty.values());
+            difficultySelectBox.getScrollPane().invalidateHierarchy();
+            difficultySelectBox.getScrollPane().invalidate();
+
         difficultySelectBoxNode = settingsMenuFlexbox.add(difficultySelectBox)
             .setAlignContent(YogaAlign.CENTER)
             .setWidthPercent(5)
             .setHeightPercent(5)
             .setMarginPercent(YogaEdge.LEFT, 2)
             .setMarginPercent(YogaEdge.BOTTOM, 2);
+        
+
 
         difficultySelectBox.addListener(difficultySelectBoxChangeListener);
         difficultySelectBox.setSelected(Config.difficulty);
@@ -228,11 +249,17 @@ public class SettingsMenu implements Screen {
 
         if(width <= 0 || height <= 0) return;
 
+
+        difficultySelectBox.getScrollPane().invalidateHierarchy();
+        difficultySelectBox.getScrollPane().invalidate();
+
         backButton.getLabel().setFontScale(width * 0.0005f, height * 0.0005f);
 
         includeEnglishTranslationCheckBox.getLabel().setFontScale(width * 0.0004f, height * 0.0004f);
 
         isDebugCheckBox.getLabel().setFontScale(width * 0.0004f, height * 0.0004f);
+
+        difficultySelectLabel.getStyle().font.getData().setScale(width * 0.0004f, height * 0.0004f);
 
         difficultySelectBox.getStyle().font.getData().setScale(width * 0.001f, height * 0.001f);
 
