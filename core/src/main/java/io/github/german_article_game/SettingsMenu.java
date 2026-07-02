@@ -8,12 +8,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -44,6 +44,9 @@ public class SettingsMenu implements Screen {
 
     YogaNode isDebugCheckBoxNode;
     CheckBox isDebugCheckBox;
+
+    YogaNode difficultySelectBoxNode;
+    SelectBox<Config.Difficulty> difficultySelectBox;
 
 
     public SettingsMenu(Main game) {
@@ -130,6 +133,20 @@ public class SettingsMenu implements Screen {
         isDebugCheckBox.addListener(isDebugListener);
         isDebugCheckBox.setChecked(Config.isDebugMode);
 
+
+        difficultySelectBox = new SelectBox<>(CurrentSkin);
+        difficultySelectBox.setItems(Config.Difficulty.values());
+        
+        
+        difficultySelectBoxNode = settingsMenuFlexbox.add(difficultySelectBox)
+            .setAlignContent(YogaAlign.CENTER)
+            .setWidthPercent(5)
+            .setHeightPercent(5)
+            .setMarginPercent(YogaEdge.LEFT, 2)
+            .setMarginPercent(YogaEdge.BOTTOM, 2);
+
+        difficultySelectBox.addListener(difficultySelectBoxChangeListener);
+        difficultySelectBox.setSelected(Config.difficulty);
     }
 
     ClickListener backListener = new ClickListener() {
@@ -154,6 +171,17 @@ public class SettingsMenu implements Screen {
             Config.isDebugMode = !Config.isDebugMode;
             isDebugCheckBox.setChecked(Config.isDebugMode);
             Config config = new Config();
+            config.createNewConfigFile();
+        }
+    };
+    ChangeListener difficultySelectBoxChangeListener = new ChangeListener() {
+        @Override
+        public void changed(ChangeEvent event, com.badlogic.gdx.scenes.scene2d.Actor actor) {
+            Config.Difficulty selectedDifficulty = difficultySelectBox.getSelected();
+            System.out.println("Selected from box: " + selectedDifficulty);
+            Config config = new Config();
+            Config.difficulty = selectedDifficulty;
+            difficultySelectBox.setSelected(Config.difficulty);
             config.createNewConfigFile();
         }
     };
@@ -206,7 +234,7 @@ public class SettingsMenu implements Screen {
 
         isDebugCheckBox.getLabel().setFontScale(width * 0.0004f, height * 0.0004f);
 
-        
+
         updateCheckBoxStyle(width, height);
 
         game.stage.getViewport().update(width, height, true);        

@@ -23,7 +23,7 @@ public class Config {
         HARD
     }
 
-    Difficulty difficulty = Difficulty.EASY;
+    static Difficulty difficulty = Difficulty.EASY;
 
     public Config() {
         kryo.register(Enum.class);
