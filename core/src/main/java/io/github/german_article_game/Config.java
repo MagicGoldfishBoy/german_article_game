@@ -25,9 +25,12 @@ public class Config {
 
     static Difficulty difficulty = Difficulty.EASY;
 
+    static float volume = 0.5f;
+
     public Config() {
         kryo.register(Enum.class);
         kryo.register(Difficulty.class);
+        kryo.register(Float.class);
     }
 
     public void useDefaultValues() {
@@ -35,6 +38,7 @@ public class Config {
         includeEnglishTranslation = true;
         isDebugMode = false;
         difficulty = Difficulty.EASY;
+        volume = 0.5f;
 
     }
 
@@ -51,6 +55,9 @@ public class Config {
 
             kryo.writeObject(output, difficulty);
             System.out.println("difficulty: " + difficulty);
+
+            kryo.writeObject(output, volume);
+            System.out.println("volume: " + volume);
 
         } catch (FileNotFoundException e) {
             System.out.println(e);
@@ -69,6 +76,9 @@ public class Config {
 
             difficulty = kryo.readObject(input, Difficulty.class);
             System.out.println("difficulty: " + difficulty);
+
+            volume = kryo.readObject(input, Float.class);
+            System.out.println("volume: " + volume);
 
         } catch (FileNotFoundException e) {
             System.out.println("Config file not found. Default values will be used.");
