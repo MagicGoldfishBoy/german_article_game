@@ -114,7 +114,8 @@ public class MainMenu implements Screen {
     ClickListener playListener = new ClickListener() {
         @Override
         public void clicked(InputEvent event, float x, float y) {
-            System.out.println("Play button clicked");
+            dispose();
+            game.setScreen(new SaveSelectMenu(game));
         }
     };
 
@@ -182,5 +183,6 @@ public class MainMenu implements Screen {
     public void dispose() {
         game.stage.clear();
         mainMenuFlexbox.clear();
+        mainMenuFlexbox.remove();
     }
 }
