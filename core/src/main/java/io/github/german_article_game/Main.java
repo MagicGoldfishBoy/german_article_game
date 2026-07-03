@@ -15,8 +15,8 @@ public class Main extends Game {
 
 	public SpriteBatch batch;
 	public BitmapFont font;
-	public BitmapFont titleFont;
-	public BitmapFont buttonFont;
+	public BitmapFont titleFont = FontGeneration.titleFont;
+	public BitmapFont buttonFont = FontGeneration.buttonFont;
 	public FitViewport viewport;
     FreeTypeFontGenerator generator;
     Skin CurrentSkin;
@@ -36,18 +36,11 @@ public class Main extends Game {
 
 		font = new BitmapFont();
 
+        FontGeneration.createFontGeneration();
+
+		buttonFont = FontGeneration.buttonFont;
+        titleFont = FontGeneration.titleFont;
         
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf"));
-        titleFont = generator.generateFont(new FreeTypeFontGenerator.FreeTypeFontParameter() {{
-            size = 96;
-        }});
-
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/Geist-VariableFont_wght.ttf"));
-
-        buttonFont = generator.generateFont(new FreeTypeFontGenerator.FreeTypeFontParameter() {{
-            size = 75;
-        }});
-		
 		font.setUseIntegerPositions(false);
 		font.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());
 
