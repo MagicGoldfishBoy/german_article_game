@@ -1,11 +1,14 @@
 package io.github.german_article_game;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -31,6 +34,9 @@ public class SaveSelectMenu implements Screen {
 
     TextButtonStyle TextButtonStyle;
     TextButton backButton;
+
+    List<String> saveList = SaveDataManager.retrieveSaveFileNames();
+    SelectBox<String> saveSelectBox;
 
     public SaveSelectMenu(Main game) {
         this.game = game;
@@ -65,6 +71,12 @@ public class SaveSelectMenu implements Screen {
             .setMarginPercent(YogaEdge.BOTTOM, 2);
 
         backButton.addListener(backListener);
+
+        saveSelectBox = new SelectBox<>(CurrentSkin);
+        saveSelectBox.setItems(saveList.toArray(new String[0]));
+        saveSelectBox.setName("Saves");
+
+        saveSelectFlexbox.add(saveSelectBox);
     }
 
     ClickListener backListener = new ClickListener() {

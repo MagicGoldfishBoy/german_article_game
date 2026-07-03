@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoException;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.KryoBufferUnderflowException;
 import com.esotericsoftware.kryo.io.Output;
@@ -32,7 +33,7 @@ public class SaveDataManager {
             System.out.println("save.bin already exists");
         }
     }
-    
+
     public static void appendSaveGameBin(String name) {
         File file = new File("save_files/save.bin");
         
@@ -44,9 +45,6 @@ public class SaveDataManager {
         Kryo kryo = new Kryo();
 
         kryo.register(ArrayList.class); 
-        
-        ArrayList<String> nameList = new ArrayList<>();
-
 
         if (file.exists() && file.length() > 0) {
             try (Input input = new Input(new FileInputStream(file))) {
@@ -68,32 +66,26 @@ public class SaveDataManager {
             System.err.println("Error writing save file: " + e.getMessage());
         }
     }
-    // public static void appendSaveGameBin(String name) {
-    //     File file = new File("save_files/save.bin");
-    //     Kryo kryo = new Kryo();
-        
-    //     if (file.exists() && file.canRead() && file.length() > 0) {
 
-    //         try (Input input = new Input(new FileInputStream(file))) {
-    //             String data = kryo.readObjectOrNull(input, String.class);
-    //             nameList.add(data);
-    //             nameList.add(name);
-    //             System.out.println(nameList.toString());
-    //             nameList.forEach(entry -> kryo.writeObject(output, entry));
-    //             System.out.println(data + nameList.toString());
-    //         } catch (Exception e) {
-    //             System.out.println(e);
-    //         }
-    //     } else {
-    //         try {
-    //             output = new Output(new FileOutputStream(file));
-    //             kryo.writeObject(output, name);
-    //             System.out.println(output);
-    //         } catch (Exception e) {
-    //             e.printStackTrace();
-    //             System.out.println(e);
-    //         }       
-    //     }
-    // }
+    public static List<String> retrieveSaveFileNames() {
+
+        File file = new File("save_files/save.bin");
+
+        Kryo kryo = new Kryo();
+        kryo.register(ArrayList.class); 
+
+        try (Input input = new Input (new FileInputStream(file))) {
+
+            nameList = kryo.readObject(input, ArrayList.class);
+
+        } catch (KryoException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println(nameList.toString());
+        return nameList;
+
+    }
     
 }
