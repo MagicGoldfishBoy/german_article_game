@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -154,8 +155,6 @@ public class SettingsMenu implements Screen {
 
         difficultySelectBox = new SelectBox<>(CurrentSkin);
             difficultySelectBox.setItems(Config.Difficulty.values());
-            difficultySelectBox.getScrollPane().invalidateHierarchy();
-            difficultySelectBox.getScrollPane().invalidate();
 
         difficultySelectBoxNode = settingsMenuFlexbox.add(difficultySelectBox)
             .setAlignContent(YogaAlign.CENTER)
@@ -168,6 +167,16 @@ public class SettingsMenu implements Screen {
 
         difficultySelectBox.addListener(difficultySelectBoxChangeListener);
         difficultySelectBox.setSelected(Config.difficulty);
+
+        settingsMenuFlexbox.invalidate();
+        settingsMenuFlexbox.layout();
+
+        if (difficultySelectBox.getScrollPane() != null) {
+            difficultySelectBox.getScrollPane().setWidth(difficultySelectBox.getWidth());
+            difficultySelectBox.getScrollPane().invalidateHierarchy();
+            difficultySelectBox.getScrollPane().invalidate();
+        }
+    
     }
 
     ClickListener backListener = new ClickListener() {
@@ -202,7 +211,6 @@ public class SettingsMenu implements Screen {
             System.out.println("Selected from box: " + selectedDifficulty);
             Config config = new Config();
             Config.difficulty = selectedDifficulty;
-            difficultySelectBox.setSelected(Config.difficulty);
             config.createNewConfigFile();
         }
     };
@@ -236,10 +244,9 @@ public class SettingsMenu implements Screen {
         game.viewport.apply();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.begin();
-        //game.titleFont.draw(game.batch, "What Article Do I Use Again?", 2.5f, 4.25f);
         game.batch.end();
 
-        game.stage.getViewport().apply();  // re-apply stage viewport before drawing
+        game.stage.getViewport().apply();
         game.stage.act(delta);
         game.stage.draw();
     }
@@ -248,10 +255,6 @@ public class SettingsMenu implements Screen {
     public void resize(int width, int height) {
 
         if(width <= 0 || height <= 0) return;
-
-
-        difficultySelectBox.getScrollPane().invalidateHierarchy();
-        difficultySelectBox.getScrollPane().invalidate();
 
         backButton.getLabel().setFontScale(width * 0.0005f, height * 0.0005f);
 
@@ -272,6 +275,14 @@ public class SettingsMenu implements Screen {
         settingsMenuFlexbox.setSize(width, height);
         settingsMenuFlexbox.invalidate();
         settingsMenuFlexbox.layout();
+
+        List<?> list = (List<?>) difficultySelectBox.getScrollPane().getActor();
+        difficultySelectBox.getScrollPane().setWidth(difficultySelectBox.getWidth());
+        difficultySelectBox.getScrollPane().setHeight(Math.min(list.getPrefHeight(), 150f));
+        list.invalidate();
+        difficultySelectBox.getScrollPane().invalidateHierarchy();
+        difficultySelectBox.getScrollPane().invalidate();
+        difficultySelectBox.getScrollPane().layout();          
     }
 
     @Override
