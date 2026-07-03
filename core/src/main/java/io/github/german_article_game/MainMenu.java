@@ -43,6 +43,8 @@ public class MainMenu implements Screen {
 
     Float buttonFontScale = Config.buttonFontScale;
 
+    TextButtonStyle TextButtonStyle;
+
     public MainMenu(Main game) {
         
         this.game = game;
@@ -66,15 +68,9 @@ public class MainMenu implements Screen {
             .setJustifyContent(YogaJustify.CENTER);   
         game.stage.addActor(mainMenuFlexbox);
 
-        TextButtonStyle defaultStyle = new TextButtonStyle();
-            defaultStyle.font = game.buttonFont;
-            defaultStyle.fontColor = Color.WHITE;
-            defaultStyle.up = CurrentSkin.newDrawable("button-normal");
-            defaultStyle.over = CurrentSkin.newDrawable("button-normal-over");
-            defaultStyle.down = CurrentSkin.newDrawable("button-normal-pressed");
+        TextButtonStyle = new StyleCreation(CurrentSkin).buttonStyle;
 
-
-        playButton = new TextButton("Play", defaultStyle);
+        playButton = new TextButton("Play", TextButtonStyle);
         playButton.getLabel().setFontScale(buttonFontScale);
 
         mainMenuFlexbox.add(playButton)
@@ -86,7 +82,7 @@ public class MainMenu implements Screen {
         playButton.setTouchable(Touchable.enabled);
 
 
-        settingsButton = new TextButton("Settings", defaultStyle);
+        settingsButton = new TextButton("Settings", TextButtonStyle);
         settingsButton.getLabel().setFontScale(buttonFontScale);
 
         mainMenuFlexbox.add(settingsButton)
@@ -98,7 +94,7 @@ public class MainMenu implements Screen {
         settingsButton.setTouchable(Touchable.enabled);
                 
 
-        exitButton = new TextButton("Exit", defaultStyle);
+        exitButton = new TextButton("Exit", TextButtonStyle);
         exitButton.getLabel().setFontScale(buttonFontScale);
 
         mainMenuFlexbox.add(exitButton)

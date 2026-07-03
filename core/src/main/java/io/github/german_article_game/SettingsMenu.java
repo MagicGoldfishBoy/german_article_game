@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -37,6 +38,10 @@ public class SettingsMenu implements Screen {
     final Main game;
 
     Float buttonFontScale = Config.buttonFontScale;
+
+    TextButtonStyle TextButtonStyle;
+    CheckBoxStyle CheckBoxStyle;
+    LabelStyle defaultLabelStyle;
 
     FlexBox settingsMenuFlexbox;
     FlexBox difficultyRow;
@@ -108,14 +113,9 @@ public class SettingsMenu implements Screen {
             .setMarginPercent(YogaEdge.TOP, 1.5f);
 
 
-        TextButtonStyle defaultStyle = new TextButtonStyle();
-            defaultStyle.font = game.buttonFont;
-            defaultStyle.fontColor = Color.WHITE;
-            defaultStyle.up = CurrentSkin.newDrawable("button-normal");
-            defaultStyle.over = CurrentSkin.newDrawable("button-normal-over");
-            defaultStyle.down = CurrentSkin.newDrawable("button-normal-pressed");
+        TextButtonStyle = new StyleCreation(CurrentSkin).buttonStyle;
 
-        backButton = new TextButton("Back", defaultStyle);
+        backButton = new TextButton("Back", TextButtonStyle);
         backButton.getLabel().setFontScale(buttonFontScale);
 
         settingsMenuFlexbox.add(backButton)
@@ -128,23 +128,10 @@ public class SettingsMenu implements Screen {
         backButton.addListener(backListener);
         backButton.setTouchable(Touchable.enabled);
 
-
-        Drawable checkOff = CurrentSkin.newDrawable("checkbox");
-        checkOff.setMinWidth(32);
-        checkOff.setMinHeight(32);
-
-        Drawable checkOn = CurrentSkin.newDrawable("checkbox-selected");
-        checkOn.setMinWidth(32);
-        checkOn.setMinHeight(32);
-
-        CheckBoxStyle defaultCheckBoxStyle = new CheckBoxStyle();
-            defaultCheckBoxStyle.font = game.buttonFont;
-            defaultCheckBoxStyle.fontColor = Color.SKY;
-            defaultCheckBoxStyle.checkboxOff = CurrentSkin.newDrawable(checkOff);
-            defaultCheckBoxStyle.checkboxOn = CurrentSkin.newDrawable(checkOn);
+        CheckBoxStyle = new StyleCreation(CurrentSkin).checkBoxStyle;
 
 
-        includeEnglishTranslationCheckBox = new CheckBox("Include English Translation", defaultCheckBoxStyle);
+        includeEnglishTranslationCheckBox = new CheckBox("Include English Translation", CheckBoxStyle);
         includeEnglishTranslationCheckBox.getLabel().setFontScale(buttonFontScale);
 
             settingsMenuFlexbox.add(includeEnglishTranslationCheckBox)
@@ -159,7 +146,7 @@ public class SettingsMenu implements Screen {
         includeEnglishTranslationCheckBox.setChecked(Config.includeEnglishTranslation);
 
 
-        isDebugCheckBox = new CheckBox("Debug Mode", defaultCheckBoxStyle);
+        isDebugCheckBox = new CheckBox("Debug Mode", CheckBoxStyle);
         isDebugCheckBox.getLabel().setFontScale(buttonFontScale);
         
         settingsMenuFlexbox.add(isDebugCheckBox)
@@ -172,8 +159,9 @@ public class SettingsMenu implements Screen {
         isDebugCheckBox.addListener(isDebugListener);
         isDebugCheckBox.setChecked(Config.isDebugMode);
 
+        LabelStyle defaultLabelStyle = new StyleCreation(CurrentSkin).defaultLabelStyle;
 
-        difficultySelectLabel = new Label("Difficulty:", new Label.LabelStyle(game.buttonFont, Color.SKY));
+        difficultySelectLabel = new Label("Difficulty:", defaultLabelStyle);
         difficultySelectLabel.getStyle().font.getData().setScale(buttonFontScale);
 
         difficultyRow.add(difficultySelectLabel)
@@ -196,7 +184,7 @@ public class SettingsMenu implements Screen {
         difficultySelectBox.setSelected(Config.difficulty);
 
 
-        volumeLabel = new Label("Volume:", new Label.LabelStyle(game.buttonFont, Color.SKY));
+        volumeLabel = new Label("Volume:", defaultLabelStyle);
         volumeLabel.setFontScale(buttonFontScale);
 
         volumeSlider = new Slider(0f, 1f, 0.1f, false, CurrentSkin);

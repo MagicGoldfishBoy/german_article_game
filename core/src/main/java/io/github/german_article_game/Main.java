@@ -40,7 +40,7 @@ public class Main extends Game {
 
 		buttonFont = FontGeneration.buttonFont;
         titleFont = FontGeneration.titleFont;
-        
+
 		font.setUseIntegerPositions(false);
 		font.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());
 
