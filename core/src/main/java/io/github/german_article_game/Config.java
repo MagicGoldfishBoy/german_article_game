@@ -27,6 +27,8 @@ public class Config {
 
     static float volume = 0.5f;
 
+    static float buttonFontScale = 0.35f;
+
     public Config() {
         kryo.register(Enum.class);
         kryo.register(Difficulty.class);

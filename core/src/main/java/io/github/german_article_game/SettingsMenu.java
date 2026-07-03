@@ -36,6 +36,8 @@ public class SettingsMenu implements Screen {
 
     final Main game;
 
+    Float buttonFontScale = Config.buttonFontScale;
+
     FlexBox settingsMenuFlexbox;
     FlexBox difficultyRow;
     FlexBox volumeRow; 
@@ -78,7 +80,7 @@ public class SettingsMenu implements Screen {
             CurrentSkin.addRegions(atlas);
 
         settingsMenuFlexbox = new FlexBox();
-        settingsMenuFlexbox.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        settingsMenuFlexbox.setSize(game.stage.getWidth(), game.stage.getHeight());
         settingsMenuFlexbox.getRoot()
             .setMarginPercent(YogaEdge.LEFT, 2)
             .setFlexDirection(YogaFlexDirection.COLUMN)  
@@ -89,19 +91,21 @@ public class SettingsMenu implements Screen {
 
 
         FlexBox difficultyRow = new FlexBox();
-        settingsMenuFlexbox.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        settingsMenuFlexbox.setSize(game.stage.getWidth(), game.stage.getHeight());
         difficultyRow.getRoot()
             .setFlexDirection(YogaFlexDirection.ROW)
             .setWrap(YogaWrap.WRAP)
             .setAlignItems(YogaAlign.CENTER)
-            .setJustifyContent(YogaJustify.FLEX_START);
+            .setJustifyContent(YogaJustify.FLEX_START)
+            .setMarginPercent(YogaEdge.TOP, 1.5f);
 
         FlexBox volumeRow = new FlexBox();
-        settingsMenuFlexbox.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        settingsMenuFlexbox.setSize(game.stage.getWidth(), game.stage.getHeight());
         volumeRow.getRoot()
             .setFlexDirection(YogaFlexDirection.ROW)
             .setWrap(YogaWrap.WRAP)
-            .setAlignItems(YogaAlign.CENTER);
+            .setAlignItems(YogaAlign.CENTER)
+            .setMarginPercent(YogaEdge.TOP, 1.5f);
 
 
         TextButtonStyle defaultStyle = new TextButtonStyle();
@@ -112,7 +116,7 @@ public class SettingsMenu implements Screen {
             defaultStyle.down = CurrentSkin.newDrawable("button-normal-pressed");
 
         backButton = new TextButton("Back", defaultStyle);
-        backButton.getLabel().setFontScale(1);
+        backButton.getLabel().setFontScale(buttonFontScale);
 
         settingsMenuFlexbox.add(backButton)
             .setWidthPercent(15)
@@ -141,7 +145,7 @@ public class SettingsMenu implements Screen {
 
 
         includeEnglishTranslationCheckBox = new CheckBox("Include English Translation", defaultCheckBoxStyle);
-        includeEnglishTranslationCheckBox.getLabel().setFontScale(0.75f);
+        includeEnglishTranslationCheckBox.getLabel().setFontScale(buttonFontScale);
 
             settingsMenuFlexbox.add(includeEnglishTranslationCheckBox)
             .setAlignContent(YogaAlign.CENTER)
@@ -156,7 +160,7 @@ public class SettingsMenu implements Screen {
 
 
         isDebugCheckBox = new CheckBox("Debug Mode", defaultCheckBoxStyle);
-        isDebugCheckBox.getLabel().setFontScale(0.75f);
+        isDebugCheckBox.getLabel().setFontScale(buttonFontScale);
         
         settingsMenuFlexbox.add(isDebugCheckBox)
             .setAlignContent(YogaAlign.CENTER)
@@ -170,11 +174,12 @@ public class SettingsMenu implements Screen {
 
 
         difficultySelectLabel = new Label("Difficulty:", new Label.LabelStyle(game.buttonFont, Color.SKY));
-        difficultySelectLabel.getStyle().font.getData().setScale(0.75f);
+        difficultySelectLabel.getStyle().font.getData().setScale(buttonFontScale);
 
         difficultyRow.add(difficultySelectLabel)
             .setMarginPercent(YogaEdge.RIGHT, 2f)
-            .setMarginPercent(YogaEdge.LEFT, 9f);
+            .setMarginPercent(YogaEdge.LEFT, 9.5f)
+            .setMarginPercent(YogaEdge.BOTTOM, 5f);
         
 
         difficultySelectBox = new SelectBox<>(CurrentSkin);
@@ -190,14 +195,15 @@ public class SettingsMenu implements Screen {
         difficultySelectBox.addListener(difficultySelectBoxChangeListener);
         difficultySelectBox.setSelected(Config.difficulty);
 
+
         volumeLabel = new Label("Volume:", new Label.LabelStyle(game.buttonFont, Color.SKY));
-        volumeLabel.getStyle().font.getData().setScale(0.75f);
+        volumeLabel.setFontScale(buttonFontScale);
 
         volumeSlider = new Slider(0f, 1f, 0.1f, false, CurrentSkin);
 
         volumeRow.add(volumeLabel)
             .setMarginPercent(YogaEdge.RIGHT, 2f)
-            .setMarginPercent(YogaEdge.LEFT, 3f);
+            .setMarginPercent(YogaEdge.LEFT, 3.5f);
 
         volumeRow.add(volumeSlider)
             .setWidthPercent(50)
@@ -227,7 +233,6 @@ public class SettingsMenu implements Screen {
         difficultyRow.invalidate();
 
         volumeRow.invalidate();
-        
         }
 
     ClickListener backListener = new ClickListener() {
@@ -276,44 +281,7 @@ public class SettingsMenu implements Screen {
             config.createNewConfigFile();
         }
     };
-
-    private void updateCheckBoxStyle(int width, int height) {
-        float size = Math.min(width, height) * 0.04f;
-
-        Drawable checkOff = CurrentSkin.newDrawable("checkbox");
-        checkOff.setMinWidth(size);
-        checkOff.setMinHeight(size);
-
-        Drawable checkOn = CurrentSkin.newDrawable("checkbox-selected");
-        checkOn.setMinWidth(size);
-        checkOn.setMinHeight(size);
-
-        CheckBoxStyle style = includeEnglishTranslationCheckBox.getStyle();
-        style.checkboxOff = checkOff;
-        style.checkboxOn = checkOn;
-
-        includeEnglishTranslationCheckBox.setStyle(style); 
-    }
-
-    private void updateSliderStyle(Slider slider, int width, int height) {
-        float knobWidth = Math.min(width, height) * 0.02f;
-        float knobHeight = Math.min(width, height) * 0.04f;
-        float bgThickness = Math.min(width, height) * 0.02f;
-
-        Slider.SliderStyle style = slider.getStyle();
-
-        Drawable knob = slider.getStyle().knob;
-        knob.setMinWidth(knobWidth);
-        knob.setMinHeight(knobHeight);
-        style.knob = knob;
-
-        Drawable bg = slider.getStyle().background;
-        bg.setMinHeight(bgThickness);
-        style.background = bg;
-
-        slider.setStyle(style);
-    }
-
+    
     @Override
     public void show() {
     }
@@ -337,37 +305,8 @@ public class SettingsMenu implements Screen {
 
         if(width <= 0 || height <= 0) return;
 
-        backButton.getLabel().setFontScale(width * 0.0005f, height * 0.0005f);
-
-        includeEnglishTranslationCheckBox.getLabel().setFontScale(width * 0.0004f, height * 0.0004f);
-
-        isDebugCheckBox.getLabel().setFontScale(width * 0.0004f, height * 0.0004f);
-
-        difficultySelectLabel.getStyle().font.getData().setScale(width * 0.0004f, height * 0.0004f);
-
-        difficultySelectBox.getStyle().font.getData().setScale(width * 0.001f, height * 0.001f);
-
-        volumeLabel.getStyle().font.getData().setScale(width * 0.0004f, height * 0.0004f);
-
-
-        updateCheckBoxStyle(width, height);
-        updateSliderStyle(volumeSlider, width, height);
-
         game.stage.getViewport().update(width, height, true);        
-        game.viewport.update(width, height, true);
-
-        settingsMenuFlexbox.setSize(width, height);
-        settingsMenuFlexbox.invalidate();
-        settingsMenuFlexbox.layout();
-
-        List<?> list = (List<?>) difficultySelectBox.getScrollPane().getActor();
-        difficultySelectBox.getScrollPane().setWidth(difficultySelectBox.getWidth());
-        difficultySelectBox.getScrollPane().setHeight(Math.min(list.getPrefHeight(), 150f));
-        list.invalidate();
-        difficultySelectBox.getScrollPane().invalidateHierarchy();
-        difficultySelectBox.getScrollPane().invalidate();
-        difficultySelectBox.getScrollPane().layout();          
-
+        game.viewport.update(width, height, true);      
 
     }
 

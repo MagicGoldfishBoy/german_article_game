@@ -41,6 +41,8 @@ public class MainMenu implements Screen {
     YogaNode exitNode;
     TextButton exitButton;
 
+    Float buttonFontScale = Config.buttonFontScale;
+
     public MainMenu(Main game) {
         
         this.game = game;
@@ -56,7 +58,7 @@ public class MainMenu implements Screen {
 
 
         mainMenuFlexbox = new FlexBox();
-        mainMenuFlexbox.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        mainMenuFlexbox.setSize(game.stage.getWidth(), game.stage.getHeight());
         mainMenuFlexbox.getRoot()
             .setFlexDirection(YogaFlexDirection.COLUMN)  
             .setWrap(YogaWrap.NO_WRAP)
@@ -73,38 +75,41 @@ public class MainMenu implements Screen {
 
 
         playButton = new TextButton("Play", defaultStyle);
-        playButton.getLabel().setFontScale(1);
+        playButton.getLabel().setFontScale(buttonFontScale);
 
-        playNode = mainMenuFlexbox.add(playButton)
+        mainMenuFlexbox.add(playButton)
+            .setWidthPercent(25)
+            .setHeightPercent(10)
+            .setMarginPercent(YogaEdge.VERTICAL, 2);
+
+        playButton.addListener(playListener);
+        playButton.setTouchable(Touchable.enabled);
+
+
+        settingsButton = new TextButton("Settings", defaultStyle);
+        settingsButton.getLabel().setFontScale(buttonFontScale);
+
+        mainMenuFlexbox.add(settingsButton)
             .setWidthPercent(25)
             .setHeightPercent(10)
             .setMarginPercent(YogaEdge.BOTTOM, 2);
 
-                playButton.addListener(playListener);
-                playButton.setTouchable(Touchable.enabled);
-
-
-                settingsButton = new TextButton("Settings", defaultStyle);
-                settingsButton.getLabel().setFontScale(1);
-
-        settingsNode = mainMenuFlexbox.add(settingsButton)
-            .setWidthPercent(25)
-            .setHeightPercent(10)
-            .setMarginPercent(YogaEdge.BOTTOM, 2);
-
-                settingsButton.addListener(settingsListener);
-                settingsButton.setTouchable(Touchable.enabled);
+        settingsButton.addListener(settingsListener);
+        settingsButton.setTouchable(Touchable.enabled);
                 
 
-                exitButton = new TextButton("Exit", defaultStyle);
-                exitButton.getLabel().setFontScale(1);
+        exitButton = new TextButton("Exit", defaultStyle);
+        exitButton.getLabel().setFontScale(buttonFontScale);
 
-        exitNode = mainMenuFlexbox.add(exitButton)
+        mainMenuFlexbox.add(exitButton)
             .setWidthPercent(25)
-            .setHeightPercent(10);
-                exitButton.addListener(exitListener);
-                exitButton.setTouchable(Touchable.enabled);
-            }
+            .setHeightPercent(10)
+            .setMarginPercent(YogaEdge.BOTTOM, 2);
+
+
+        exitButton.addListener(exitListener);
+        exitButton.setTouchable(Touchable.enabled);
+    }
 
     ClickListener playListener = new ClickListener() {
         @Override
@@ -140,10 +145,10 @@ public class MainMenu implements Screen {
         game.viewport.apply();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.begin();
-        game.titleFont.draw(game.batch, "What Article Do I Use Again?", 2.5f, 4.25f);
+        game.titleFont.draw(game.batch, "What Article Do I Use Again?", 175f, 400f);
         game.batch.end();
 
-        game.stage.getViewport().apply();  // re-apply stage viewport before drawing
+        game.stage.getViewport().apply();
         game.stage.act(delta);
         game.stage.draw();
     }
@@ -152,16 +157,9 @@ public class MainMenu implements Screen {
     public void resize(int width, int height) {
 
         if(width <= 0 || height <= 0) return;
-        playButton.getLabel().setFontScale(width * 0.0005f, height * 0.0005f);
-        settingsButton.getLabel().setFontScale(width * 0.0005f, height * 0.0005f);
-        exitButton.getLabel().setFontScale(width * 0.0005f, height * 0.0005f);
         
         game.stage.getViewport().update(width, height, true);        
         game.viewport.update(width, height, true);
-
-        mainMenuFlexbox.setSize(width, height);
-        mainMenuFlexbox.invalidate();
-        mainMenuFlexbox.layout();
 
     }
 

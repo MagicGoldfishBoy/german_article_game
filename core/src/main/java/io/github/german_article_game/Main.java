@@ -21,17 +21,22 @@ public class Main extends Game {
     FreeTypeFontGenerator generator;
     Skin CurrentSkin;
     Stage stage;
+    
 
     @Override
     public void create() {
 
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         CurrentSkin = new Skin(Gdx.files.internal("uiskin.json"));
-        stage = new Stage(new ScreenViewport());
+
+        stage = new Stage(viewport);
 
 		batch = new SpriteBatch();
 
 		font = new BitmapFont();
 
+        
         generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf"));
         titleFont = generator.generateFont(new FreeTypeFontGenerator.FreeTypeFontParameter() {{
             size = 96;
@@ -42,8 +47,6 @@ public class Main extends Game {
         buttonFont = generator.generateFont(new FreeTypeFontGenerator.FreeTypeFontParameter() {{
             size = 75;
         }});
-
-		viewport = new FitViewport(8, 5);
 		
 		font.setUseIntegerPositions(false);
 		font.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());
@@ -55,7 +58,6 @@ public class Main extends Game {
 
         Config config = new Config();
         config.loadAllSettings();
-        //config.createNewConfigFile();
 
         setScreen(new MainMenu(this));
     }
