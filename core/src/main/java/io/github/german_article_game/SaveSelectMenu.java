@@ -29,6 +29,7 @@ public class SaveSelectMenu implements Screen {
 
     Skin CurrentSkin;
 
+    TextButtonStyle TextButtonStyle;
     TextButton backButton;
 
     public SaveSelectMenu(Main game) {
@@ -53,12 +54,7 @@ public class SaveSelectMenu implements Screen {
             .setJustifyContent(YogaJustify.FLEX_START);  
         game.stage.addActor(saveSelectFlexbox);
 
-        TextButtonStyle defaultStyle = new TextButtonStyle();
-            defaultStyle.font = game.buttonFont;
-            defaultStyle.fontColor = Color.WHITE;
-            defaultStyle.up = CurrentSkin.newDrawable("button-normal");
-            defaultStyle.over = CurrentSkin.newDrawable("button-normal-over");
-            defaultStyle.down = CurrentSkin.newDrawable("button-normal-pressed");
+        TextButtonStyle defaultStyle = new StyleCreation(CurrentSkin).buttonStyle;
 
         backButton = new TextButton("Back", defaultStyle);
         backButton.getLabel().setFontScale(Config.buttonFontScale);

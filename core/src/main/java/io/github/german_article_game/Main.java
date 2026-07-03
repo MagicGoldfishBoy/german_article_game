@@ -52,6 +52,9 @@ public class Main extends Game {
         Config config = new Config();
         config.loadAllSettings();
 
+        SaveDataManager.createSaveGameBin();
+        //SaveDataManager.appendSaveGameBin("bill");
+
         setScreen(new MainMenu(this));
     }
 
