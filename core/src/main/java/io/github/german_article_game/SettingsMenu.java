@@ -37,6 +37,8 @@ public class SettingsMenu implements Screen {
     final Main game;
 
     FlexBox settingsMenuFlexbox;
+    FlexBox difficultyRow;
+    FlexBox volumeRow; 
 
     TextureAtlas atlas;
 
@@ -54,11 +56,13 @@ public class SettingsMenu implements Screen {
     YogaNode difficultySelectLabelNode;
     Label difficultySelectLabel;
 
-    YogaNode volumeSliderNode;
-    Slider volumeSlider;
-
     YogaNode difficultySelectBoxNode;
     SelectBox<Config.Difficulty> difficultySelectBox;
+
+    Label volumeLabel;
+
+    YogaNode volumeSliderNode;
+    Slider volumeSlider;
 
 
     public SettingsMenu(Main game) {
@@ -91,6 +95,13 @@ public class SettingsMenu implements Screen {
             .setWrap(YogaWrap.WRAP)
             .setAlignItems(YogaAlign.CENTER)
             .setJustifyContent(YogaJustify.FLEX_START);
+
+        FlexBox volumeRow = new FlexBox();
+        settingsMenuFlexbox.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        volumeRow.getRoot()
+            .setFlexDirection(YogaFlexDirection.ROW)
+            .setWrap(YogaWrap.WRAP)
+            .setAlignItems(YogaAlign.CENTER);
 
 
         TextButtonStyle defaultStyle = new TextButtonStyle();
@@ -179,15 +190,19 @@ public class SettingsMenu implements Screen {
         difficultySelectBox.addListener(difficultySelectBoxChangeListener);
         difficultySelectBox.setSelected(Config.difficulty);
 
+        volumeLabel = new Label("Volume:", new Label.LabelStyle(game.buttonFont, Color.SKY));
+        volumeLabel.getStyle().font.getData().setScale(0.75f);
 
         volumeSlider = new Slider(0f, 1f, 0.1f, false, CurrentSkin);
-        
 
-        volumeSliderNode = settingsMenuFlexbox.add(volumeSlider)
-            .setAlignContent(YogaAlign.CENTER)
-            .setWidthPercent(15)
-            .setHeightPercent(5)
-            .setMarginAuto(YogaEdge.ALL);
+        volumeRow.add(volumeLabel)
+            .setMarginPercent(YogaEdge.RIGHT, 2f)
+            .setMarginPercent(YogaEdge.LEFT, 3f);
+
+        volumeRow.add(volumeSlider)
+            .setWidthPercent(50)
+            .setHeightPercent(100);
+        
 
         volumeSlider.addListener(volumeSliderChangeListener);
         volumeSlider.setValue(Config.volume);
@@ -204,6 +219,15 @@ public class SettingsMenu implements Screen {
         settingsMenuFlexbox.add(difficultyRow)
             .setWidthPercent(40)
             .setHeightPercent(6);
+
+        settingsMenuFlexbox.add(volumeRow)
+            .setWidthPercent(100)
+            .setHeightPercent(6);
+
+        difficultyRow.invalidate();
+
+        volumeRow.invalidate();
+        
         }
 
     ClickListener backListener = new ClickListener() {
@@ -323,10 +347,7 @@ public class SettingsMenu implements Screen {
 
         difficultySelectBox.getStyle().font.getData().setScale(width * 0.001f, height * 0.001f);
 
-        volumeSlider.setSize(width * 3f, height * 3f);
-        volumeSlider.invalidateHierarchy();
-        volumeSlider.invalidate();
-        volumeSlider.layout();
+        volumeLabel.getStyle().font.getData().setScale(width * 0.0004f, height * 0.0004f);
 
 
         updateCheckBoxStyle(width, height);
@@ -346,6 +367,8 @@ public class SettingsMenu implements Screen {
         difficultySelectBox.getScrollPane().invalidateHierarchy();
         difficultySelectBox.getScrollPane().invalidate();
         difficultySelectBox.getScrollPane().layout();          
+
+
     }
 
     @Override
