@@ -72,18 +72,19 @@ public class SaveSelectMenu implements Screen {
             .setJustifyContent(YogaJustify.FLEX_START);  
         game.stage.addActor(saveSelectFlexbox);
 
-optionColumnFlexbox = new FlexBox();
-optionColumnFlexbox.setFillParent(true);
-optionColumnFlexbox.getRoot()
-    .setPositionType(YogaPositionType.ABSOLUTE)
-    .setWidthPercent(100)              // <-- add this: fixed width, not content-based
-    .setFlexDirection(YogaFlexDirection.COLUMN)
-    .setWrap(YogaWrap.NO_WRAP)
-    .setAlignContent(YogaAlign.STRETCH)
-    .setAlignItems(YogaAlign.CENTER)
-    .setPositionPercent(YogaEdge.RIGHT, 50)
-    .setMarginPercent(YogaEdge.TOP, 2);
-game.stage.addActor(optionColumnFlexbox);
+        optionColumnFlexbox = new FlexBox();
+        optionColumnFlexbox.setFillParent(true);
+        optionColumnFlexbox.getRoot()
+            .setPositionType(YogaPositionType.ABSOLUTE)
+            .setOverflow(YogaOverflow.SCROLL)
+            .setWidthPercent(100)
+            .setFlexDirection(YogaFlexDirection.COLUMN)
+            .setWrap(YogaWrap.NO_WRAP)
+            .setAlignContent(YogaAlign.STRETCH)
+            .setAlignItems(YogaAlign.CENTER)
+            .setPositionPercent(YogaEdge.RIGHT, 50)
+            .setMarginPercent(YogaEdge.TOP, 2);
+        game.stage.addActor(optionColumnFlexbox);
 
         TextButtonStyle defaultStyle = new StyleCreation(CurrentSkin).buttonStyle;
 
@@ -109,10 +110,17 @@ game.stage.addActor(optionColumnFlexbox);
         newGameButton.addListener(newGameClickListener);
 
         for (String i : saveList) {
-            Table t = new Table();
-            Label l = new Label(i, CurrentSkin);
-            t.add(l);
-            saveSelectFlexbox.add(t);  
+            Table table = new Table();
+            Label name_label = new Label(i, CurrentSkin);
+            TextButton button = new TextButton("Load", CurrentSkin);
+            button.setWidth(10);
+            table.add(name_label);
+            table.row();
+            table.add(button);
+            table.padRight(25);
+            table.padBottom(25);
+            table.setColor(Color.WHITE);
+            saveSelectFlexbox.add(table);  
         }
     }
 
@@ -181,6 +189,7 @@ game.stage.addActor(optionColumnFlexbox);
 
         game.stage.clear();
         saveSelectFlexbox.clear();
+        optionColumnFlexbox.clear();
     }
     
 }
