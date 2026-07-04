@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
@@ -44,6 +45,10 @@ public class StyleCreation {
         defaultLabelStyle = new LabelStyle();
             defaultLabelStyle.font = FontGeneration.buttonFont;
             defaultLabelStyle.fontColor = Color.SKY;
+    }
+
+    public static float sizeTextButton(TextButton button) {
+        return button.getLabel().getText().length() * 4;
     }
     
 }

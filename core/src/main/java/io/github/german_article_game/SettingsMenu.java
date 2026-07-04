@@ -91,7 +91,6 @@ public class SettingsMenu implements Screen {
 
 
         FlexBox difficultyRow = new FlexBox();
-        settingsMenuFlexbox.setSize(game.stage.getWidth(), game.stage.getHeight());
         difficultyRow.getRoot()
             .setFlexDirection(YogaFlexDirection.ROW)
             .setWrap(YogaWrap.WRAP)
@@ -100,7 +99,6 @@ public class SettingsMenu implements Screen {
             .setMarginPercent(YogaEdge.TOP, 1.5f);
 
         FlexBox volumeRow = new FlexBox();
-        settingsMenuFlexbox.setSize(game.stage.getWidth(), game.stage.getHeight());
         volumeRow.getRoot()
             .setFlexDirection(YogaFlexDirection.ROW)
             .setWrap(YogaWrap.WRAP)

@@ -2,13 +2,17 @@ package io.github.german_article_game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
@@ -17,16 +21,17 @@ public class Main extends Game {
 	public BitmapFont font;
 	public BitmapFont titleFont = FontGeneration.titleFont;
 	public BitmapFont buttonFont = FontGeneration.buttonFont;
-	public FitViewport viewport;
+	//public FitViewport viewport;
+    public StretchViewport viewport;
     FreeTypeFontGenerator generator;
     Skin CurrentSkin;
     Stage stage;
-    
 
     @Override
     public void create() {
 
-        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        viewport = new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         CurrentSkin = new Skin(Gdx.files.internal("uiskin.json"));
 
