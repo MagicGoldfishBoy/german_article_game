@@ -44,6 +44,8 @@ public class SaveSelectMenu implements Screen {
 
     TextButton newGameButton;
 
+    TextButton testModeButton;
+
     List<String> saveList = SaveDataManager.retrieveSaveFileNames();
     SelectBox<String> saveSelectBox;
 
@@ -109,6 +111,19 @@ public class SaveSelectMenu implements Screen {
 
         newGameButton.addListener(newGameClickListener);
 
+
+        testModeButton = new TextButton("Test Mode", defaultStyle);
+        testModeButton.getLabel().setFontScale(Config.buttonFontScale);
+
+        if (Config.isDebugMode) {
+            optionColumnFlexbox.add(testModeButton)
+                .setWidthPercent(StyleCreation.sizeTextButton(testModeButton))
+                .setHeight(10)
+                .setMarginPercent(YogaEdge.BOTTOM, 2);
+            
+            testModeButton.addListener(testModeListener);
+        }
+
         for (String i : saveList) {
             Table table = new Table();
             Label name_label = new Label(i, CurrentSkin);
@@ -136,6 +151,13 @@ public class SaveSelectMenu implements Screen {
         @Override
         public void clicked(InputEvent event, float x, float y) {
             System.out.println("New Game creation coming soon!");
+        } 
+    };
+
+    ClickListener testModeListener = new ClickListener() {
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            System.out.println("Test Mode coming soon!");
         } 
     };
 
