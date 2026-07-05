@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+import com.badlogic.gdx.Input.Keys;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.KryoException;
 import com.esotericsoftware.kryo.io.Input;
@@ -28,6 +29,12 @@ public class Config {
     static float volume = 0.5f;
 
     static float buttonFontScale = 0.35f;
+
+    static int upKey = Keys.W;
+    static int leftKey = Keys.A;
+    static int downKey = Keys.S;
+    static int rightKey = Keys.D;
+    static int fireKey = Keys.SPACE;
 
     public Config() {
         kryo.register(Enum.class);
