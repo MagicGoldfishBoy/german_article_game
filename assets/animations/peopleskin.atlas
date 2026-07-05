@@ -1,0 +1,12 @@
+people.png
+size: 500,500
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+player-normal
+  rotate: false
+  xy: 0, 0
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1

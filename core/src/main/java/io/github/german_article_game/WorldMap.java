@@ -35,7 +35,10 @@ public class WorldMap implements Screen {
         entities = new SnapshotArray<>();
         world = new World<>();
         player = new Player();
-        world.add(new Item<Entity>(player), 0, 0, 10, 10);
+
+        player.item = new Item<>(player);
+        world.add(player.item, player.x + player.bboxX, player.y + player.bboxY,
+            player.bboxWidth, player.bboxHeight);
     }
 
     @Override
@@ -46,6 +49,8 @@ public class WorldMap implements Screen {
         Main.batch.setProjectionMatrix(game.viewport.getCamera().combined);
 
         player.act(delta);
+
+        world.move(player.item, player.x + player.bboxX, player.y + player.bboxY, null);
 
         Main.batch.begin();
         player.draw();

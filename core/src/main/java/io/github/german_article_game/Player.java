@@ -8,16 +8,20 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.MathUtils;
 
 public class Player extends Entity {
-    static TextureAtlas atlas = new TextureAtlas("ui/uiskin.atlas");
+    static TextureAtlas atlas = new TextureAtlas("animations/peopleskin.atlas");
     public static final Animation<AtlasRegion> playerAnimation =
-        new Animation<>(1 / 30f, atlas.findRegions("square"), PlayMode.LOOP);
+        new Animation<>(1 / 30f, atlas.findRegions("player-normal"), PlayMode.LOOP);
 
     public static final float SPEED = 200f;
 
     public Player() {
         this.animation = playerAnimation;
-        this.x = 0;
-        this.y = 0;
+        this.x = 100;
+        this.y = 100;
+        this.bboxWidth = 10;
+        this.bboxHeight = 10;
+        this.bboxX = 0;
+        this.bboxY = 0;
     }
 
     @Override
