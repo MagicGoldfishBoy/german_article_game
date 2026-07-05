@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
-public class WorldMap implements Screen {
+public class TestMap implements Screen {
 	public static SpriteBatch spriteBatch;
 	public static TextureAtlas textureAtlas;
 	public static OrthographicCamera camera;
@@ -27,15 +27,16 @@ public class WorldMap implements Screen {
     final Main game;
     public static Player player;
 
-    public WorldMap(Main game) {
+    public TestMap(Main game) {
         this.game = game;
     }
 
     @Override
     public void show() {
-        entities = new SnapshotArray<>();
-        world = new World<>();
-        player = new Player();
+        entities = game.entities;
+        //world = new World<>();
+        world = game.world;
+        player = new Player(game);
 
         player.item = new Item<>(player);
         world.add(player.item, player.x + player.bboxX, player.y + player.bboxY,
@@ -56,6 +57,12 @@ public class WorldMap implements Screen {
 
         Main.batch.begin();
         player.draw();
+
+        for (Entity i : entities) {
+            i.act(delta);
+            i.draw();
+        };
+
         Main.batch.end();
 
         game.stage.getViewport().apply();

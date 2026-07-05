@@ -7,8 +7,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.dongbat.jbump.World;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
@@ -22,6 +24,8 @@ public class Main extends Game {
     FreeTypeFontGenerator generator;
     Skin CurrentSkin;
     Stage stage;
+    World world;
+    SnapshotArray entities;
 
     @Override
     public void create() {
@@ -39,6 +43,9 @@ public class Main extends Game {
 		font = new BitmapFont();
 
         FontGeneration.createFontGeneration();
+
+        world = new World<>();
+        entities = new SnapshotArray<>();
 
 		buttonFont = FontGeneration.buttonFont;
         titleFont = FontGeneration.titleFont;

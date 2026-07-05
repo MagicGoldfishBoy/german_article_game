@@ -13,8 +13,11 @@ public class Player extends Entity {
         new Animation<>(1.5f / 30f, atlas.findRegions("player-normal"), PlayMode.LOOP);
 
     public static final float SPEED = 200f;
+    Bullet bullet;
+    final Main game;
 
-    public Player() {
+    public Player(Main game) {
+        this.game = game;
         this.animation = playerAnimation;
         this.x = 100;
         this.y = 100;
@@ -32,7 +35,7 @@ public class Player extends Entity {
         boolean down = Gdx.input.isKeyPressed(Config.downKey);
         boolean fire = Gdx.input.isKeyJustPressed(Config.fireKey);
 
-        Float direction = null; // null = not moving
+        Float direction = null;
 
         if (left || right || up || down) {
             if (left || right) {
@@ -49,6 +52,12 @@ public class Player extends Entity {
                 if (up) direction = 90f;
                 else if (down) direction = 270f;
             }
+        }
+
+        if(fire) {
+            bullet = new Bullet(game);
+            game.entities.add(bullet);
+            bullet.act(180f);
         }
 
         if (direction != null) {

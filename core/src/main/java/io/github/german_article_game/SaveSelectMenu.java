@@ -158,7 +158,7 @@ public class SaveSelectMenu implements Screen {
         @Override
         public void clicked(InputEvent event, float x, float y) {
             dispose();
-            game.setScreen(new WorldMap(game));
+            game.setScreen(new TestMap(game));
         } 
     };
 
