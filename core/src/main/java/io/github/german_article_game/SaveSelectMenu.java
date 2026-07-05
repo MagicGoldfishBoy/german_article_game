@@ -171,9 +171,9 @@ public class SaveSelectMenu implements Screen {
         ScreenUtils.clear(Color.ROYAL);
 
         game.viewport.apply();
-        game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
-        game.batch.begin();
-        game.batch.end();
+        Main.batch.setProjectionMatrix(game.viewport.getCamera().combined);
+        Main.batch.begin();
+        Main.batch.end();
 
         game.stage.getViewport().apply();
         game.stage.act(delta);
