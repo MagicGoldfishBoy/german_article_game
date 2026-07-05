@@ -157,7 +157,8 @@ public class SaveSelectMenu implements Screen {
     ClickListener testModeListener = new ClickListener() {
         @Override
         public void clicked(InputEvent event, float x, float y) {
-            System.out.println("Test Mode coming soon!");
+            dispose();
+            game.setScreen(new WorldMap(game));
         } 
     };
 
