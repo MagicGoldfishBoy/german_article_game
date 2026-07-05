@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.MathUtils;
 public class Player extends Entity {
     static TextureAtlas atlas = new TextureAtlas("animations/peopleskin.atlas");
     public static final Animation<AtlasRegion> playerAnimation =
-        new Animation<>(1 / 30f, atlas.findRegions("player-normal"), PlayMode.LOOP);
+        new Animation<>(1.5f / 30f, atlas.findRegions("player-normal"), PlayMode.LOOP);
 
     public static final float SPEED = 200f;
 

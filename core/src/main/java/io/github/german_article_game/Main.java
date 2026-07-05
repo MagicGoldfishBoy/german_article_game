@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -16,7 +17,7 @@ public class Main extends Game {
 	public BitmapFont font;
 	public BitmapFont titleFont = FontGeneration.titleFont;
 	public BitmapFont buttonFont = FontGeneration.buttonFont;
-	//public FitViewport viewport;
+    public static FitViewport gameplayViewport;
     public StretchViewport viewport;
     FreeTypeFontGenerator generator;
     Skin CurrentSkin;
@@ -26,6 +27,7 @@ public class Main extends Game {
     public void create() {
 
         //viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        gameplayViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         CurrentSkin = new Skin(Gdx.files.internal("uiskin.json"));

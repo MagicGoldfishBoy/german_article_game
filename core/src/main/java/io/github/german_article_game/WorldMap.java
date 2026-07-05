@@ -9,13 +9,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
 public class WorldMap implements Screen {
 	public static SpriteBatch spriteBatch;
 	public static TextureAtlas textureAtlas;
-	public static ExtendViewport viewport;
 	public static OrthographicCamera camera;
 	public static SnapshotArray<Entity> entities;
 	public static World<Entity> world;
@@ -45,7 +46,8 @@ public class WorldMap implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(Color.ROYAL);
 
-        game.viewport.apply();
+        Main.gameplayViewport.apply();
+        //game.viewport.apply();
         Main.batch.setProjectionMatrix(game.viewport.getCamera().combined);
 
         player.act(delta);
@@ -67,7 +69,8 @@ public class WorldMap implements Screen {
         if(width <= 0 || height <= 0) return;
 
         game.stage.getViewport().update(width, height, true);        
-        game.viewport.update(width, height, true);  
+        game.viewport.update(width, height, true); 
+        Main.gameplayViewport.update(width, height); 
     }
 
     @Override

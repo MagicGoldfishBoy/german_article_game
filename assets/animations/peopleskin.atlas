@@ -6,7 +6,28 @@ repeat: none
 player-normal
   rotate: false
   xy: 0, 0
-  size: 50, 50
-  orig: 50, 50
+  size: 25, 45
+  orig: 25, 45
+  offset: 0, 0
+  index: -1
+player-normal
+  rotate: false
+  xy: 25, 0
+  size: 25, 45
+  orig: 25, 45
+  offset: 0, 0
+  index: -1
+player-normal
+  rotate: false
+  xy: 50, 0
+  size: 25, 45
+  orig: 25, 45
+  offset: 0, 0
+  index: -1
+player-normal
+  rotate: false
+  xy: 0, 0
+  size: 25, 45
+  orig: 25, 45
   offset: 0, 0
   index: -1
