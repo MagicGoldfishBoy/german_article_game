@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.dongbat.jbump.CollisionFilter;
+import com.dongbat.jbump.Item;
+import com.dongbat.jbump.Rect;
+import com.dongbat.jbump.Response;
+import com.dongbat.jbump.Response.Result;
 
 public class Player extends Entity {
     static TextureAtlas atlas = new TextureAtlas("animations/peopleskin.atlas");
@@ -25,6 +30,8 @@ public class Player extends Entity {
         this.bboxHeight = 10;
         this.bboxX = 0;
         this.bboxY = 0;
+        item = new Item<>(this);
+        game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
     }
 
     @Override
@@ -54,10 +61,13 @@ public class Player extends Entity {
             }
         }
 
-        if(fire) {
-            bullet = new Bullet(game);
-            game.entities.add(bullet);
-            bullet.act(180f);
+        if (fire) {
+            Bullet b = new Bullet(game);
+            b.x = x + bboxWidth / 2f - b.bboxWidth / 2f;
+            b.y = y + bboxHeight / 2f - b.bboxHeight / 2f;
+            b.direction = direction != null ? direction : 0f;
+
+            game.entities.add(b);
         }
 
         if (direction != null) {
@@ -65,6 +75,21 @@ public class Player extends Entity {
             y += MathUtils.sinDeg(direction) * SPEED * delta;
         }
 
+        Result result = game.world.move(item, x + bboxX, y + bboxY, new PlayerCollisionFilter());
+        Rect rect = game.world.getRect(item);
+        if (rect != null) {
+            x = rect.x - bboxX;
+            y = rect.y - bboxY;
+        }
+
         animationTime += delta;
+        }
+
+    public static class PlayerCollisionFilter implements CollisionFilter {
+        @Override
+        public Response filter(Item item, Item other) {
+            if (other.userData instanceof Entity) return Response.cross;
+            else return null;
+        }
     }
 }

@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
+import io.github.german_article_game.Player.PlayerCollisionFilter;
+
 public class TestMap implements Screen {
 	public static SpriteBatch spriteBatch;
 	public static TextureAtlas textureAtlas;
@@ -53,7 +55,7 @@ public class TestMap implements Screen {
 
         player.act(delta);
 
-        world.move(player.item, player.x + player.bboxX, player.y + player.bboxY, null);
+        world.move(player.item, player.x + player.bboxX, player.y + player.bboxY, PlayerCollisionFilter.defaultFilter);
 
         Main.batch.begin();
         player.draw();

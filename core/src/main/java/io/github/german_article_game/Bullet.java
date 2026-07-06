@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.Item;
@@ -26,6 +28,10 @@ public class Bullet extends Entity {
     public float bulletTimer;
     public static final float SPEED = 200f;
     final Main game;
+    public static final Vector2 vector2 = new Vector2();
+    public static final Vector3 vector3 = new Vector3();
+        private float width;
+        private float height;
     
     public static final BulletCollisionFilter BULLET_COLLISION_FILTER = new BulletCollisionFilter();
 
@@ -37,50 +43,60 @@ public class Bullet extends Entity {
         bboxWidth = 100;
         bboxHeight = 100;
         item = new Item<>(this);
-        x = Gdx.graphics.getWidth() / 2;
-        y = Gdx.graphics.getHeight() / 2;
+        width = bulletAnimation.getKeyFrames()[0].getRegionWidth();
+        height = bulletAnimation.getKeyFrames()[0].getRegionHeight();
+        // x = Gdx.graphics.getWidth() / 2;
+        // y = Gdx.graphics.getHeight() / 2;
         game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
     }
 
-    @Override
-    public void act(float delta) {
+@Override
+public void act(float delta) {
+    x += delta * deltaX;
+    y += delta * deltaY;
 
-        x += delta * deltaX;
-        y += delta * deltaY;
-        
-        //handle collisions
+    // move THIS bullet's own item, not a new one
+    Result result = game.world.move(item, x + bboxX, y + bboxY, BULLET_COLLISION_FILTER);
 
-        Result result = game.world.move(item, x, y, BULLET_COLLISION_FILTER);   
+    vector3.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+    vector2.set(vector3.x, vector3.y);
+    vector2.sub(x + width / 2, y + height / 2);
 
-        for (int i = 0; i < result.projectedCollisions.size(); i++) {
-            Collision collision = result.projectedCollisions.get(i);
-            if (collision.other.userData instanceof Entity) {
+    for (int i = 0; i < result.projectedCollisions.size(); i++) {
+        Collision collision = result.projectedCollisions.get(i);
+        if (collision.other.userData instanceof Entity) {
 
-                game.entities.removeValue(this, true);
-                if (item != null) {
-                    game.world.remove(item);
-                    item = null;
-                }
-                
-                // Entity enemy = (Entity) collision.other.userData;
-                // if (!enemy.isDying()) {
-                //     //enemy is not dead yet: kill it
-                //     enemy.die();
-                //     hurtSound.play();
-                // } else {
-                //     //push the enemy
-                //     enemy.deltaX += deltaX * BULLET_PUSH_MAGNITUDE;
-                //     enemy.deltaY += deltaY * BULLET_PUSH_MAGNITUDE;
-                // }
+            game.entities.removeValue(this, true);
+            if (item != null) {
+                game.world.remove(item);
+                item = null;
             }
+            bulletTimer = BULLET_DELAY;
+
+            // NOW create the bounce-back bullet, fresh, after removing this one
+            Bullet bounced = new Bullet(game);
+
+            vector2.set(BULLET_START_DISTANCE, 0);
+            bounced.x = x + width / 2 - bounced.bboxWidth / 2 + vector2.x;
+            bounced.y = y + height / 2 - bounced.bboxHeight / 2 + vector2.y;
+
+            vector2.set(BULLET_SPEED, 0);
+            bounced.deltaX = vector2.x;
+            bounced.deltaY = vector2.y;
+
+            game.entities.add(bounced);
+            game.world.update(bounced.item, bounced.x + bounced.bboxX, bounced.y + bounced.bboxY);
+
+            break; // this bullet is gone, stop processing its other collisions
         }
-        
-        //update position based on collisions
-        Rect rect = game.world.getRect(item);
-        if (rect != null) {
-            x = rect.x;
-            y = rect.y;
-        }
+    }
+
+    Rect rect = game.world.getRect(item);
+    if (rect != null) {
+        x = rect.x;
+        y = rect.y;
+    }
+
         
         //if outside view
         // if (x < camera.position.x - camera.viewportWidth / 2 || x > camera.position.x + camera.viewportWidth / 2 ||
