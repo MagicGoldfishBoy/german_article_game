@@ -65,14 +65,6 @@ public class TestMap implements Screen {
         Main.batch.begin();
 
         player.draw();
-
-        if (Config.isDebugMode) {
-            shapeRenderer.begin(ShapeType.Line);
-            shapeRenderer.setColor(Color.BLACK);
-            player.drawDebugHitbox(shapeRenderer, world);
-            shapeRenderer.end();
-        }
-
         
 
         for (Entity i : entities) {
@@ -82,6 +74,13 @@ public class TestMap implements Screen {
 
         Main.batch.end();
 
+        if (Config.isDebugMode) {
+            shapeRenderer.begin(ShapeType.Line);
+            shapeRenderer.setColor(Color.BLACK);
+            player.drawDebugHitbox(shapeRenderer, world);
+            shapeRenderer.end();
+        }
+        
         game.stage.getViewport().apply();
         game.stage.act(delta);
         game.stage.draw();
