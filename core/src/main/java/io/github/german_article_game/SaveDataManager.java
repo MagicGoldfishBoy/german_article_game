@@ -82,7 +82,7 @@ public class SaveDataManager {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println(nameList.toString());
+       // System.out.println(nameList.toString());
         return nameList;
 
     }

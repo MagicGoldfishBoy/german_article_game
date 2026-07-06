@@ -6,7 +6,7 @@ repeat: none
 bullet-normal
   rotate: false
   xy: 0, 0
-  size: 10, 10
+  size: 5, 10
   orig: 10, 10
   offset: 0, 0
   index: -1

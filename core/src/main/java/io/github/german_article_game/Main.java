@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.dongbat.jbump.World;
@@ -20,7 +21,7 @@ public class Main extends Game {
 	public BitmapFont font;
 	public BitmapFont titleFont = FontGeneration.titleFont;
 	public BitmapFont buttonFont = FontGeneration.buttonFont;
-    public static FitViewport gameplayViewport;
+    public static ExtendViewport gameplayViewport;
     public StretchViewport viewport;
     FreeTypeFontGenerator generator;
     Skin CurrentSkin;
@@ -33,7 +34,7 @@ public class Main extends Game {
     public void create() {
 
         //viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        gameplayViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        gameplayViewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         CurrentSkin = new Skin(Gdx.files.internal("uiskin.json"));

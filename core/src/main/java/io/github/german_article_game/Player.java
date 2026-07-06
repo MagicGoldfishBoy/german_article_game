@@ -62,11 +62,11 @@ public class Player extends Entity {
         }
 
         if (fire) {
-            Bullet b = new Bullet(game);
-            b.x = x + bboxWidth / 2f; //- b.bboxWidth / 2f;
-            b.y = y + bboxHeight; // 2f;
-            game.entities.add(b);
-            game.world.update(b.item, b.x + b.bboxX, b.y + b.bboxY);
+            Bullet bullet = new Bullet(game);
+            bullet.x = x + bboxWidth / 2.5f;
+            bullet.y = y + bboxHeight;
+            game.entities.add(bullet);
+            game.world.update(bullet.item, bullet.x + bullet.bboxX, bullet.y + bullet.bboxY);
         }
 
         if (direction != null) {

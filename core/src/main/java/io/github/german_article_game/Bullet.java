@@ -18,7 +18,7 @@ public class Bullet extends Entity {
     public static final Animation<AtlasRegion> bulletAnimation =
         new Animation<>(1.5f / 30f, atlas.findRegions("bullet-normal"), PlayMode.LOOP);
 
-    public static final float BULLET_SPEED = 1200f;
+    public static final float BULLET_SPEED = 1000f;
     public static final BulletCollisionFilter BULLET_COLLISION_FILTER = new BulletCollisionFilter();
 
     final Main game;
@@ -30,8 +30,8 @@ public class Bullet extends Entity {
         this.animation = bulletAnimation;
         bboxX = 0;
         bboxY = 0;
-        bboxWidth = 10;
-        bboxHeight = 10;
+        bboxWidth = bulletAnimation.getKeyFrames()[0].getRegionWidth();
+        bboxHeight = bulletAnimation.getKeyFrames()[0].getRegionHeight();
 
         width = bulletAnimation.getKeyFrames()[0].getRegionWidth();
         height = bulletAnimation.getKeyFrames()[0].getRegionHeight();
