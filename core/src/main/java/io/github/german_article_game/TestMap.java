@@ -38,16 +38,10 @@ public class TestMap implements Screen {
 
     @Override
     public void show() {
-        
         entities = game.entities;
         world = game.world;
-
         shapeRenderer = game.shapeRenderer;
         player = new Player(game);
-
-        player.item = new Item<>(player);
-        world.add(player.item, player.x + player.bboxX, player.y + player.bboxY,
-            player.bboxWidth, player.bboxHeight);
     }
 
     @Override
@@ -59,8 +53,6 @@ public class TestMap implements Screen {
         Main.batch.setProjectionMatrix(game.viewport.getCamera().combined);
 
         player.act(delta);
-
-        world.move(player.item, player.x + player.bboxX, player.y + player.bboxY, PlayerCollisionFilter.instance);
 
         Main.batch.begin();
 

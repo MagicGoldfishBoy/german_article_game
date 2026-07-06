@@ -74,7 +74,7 @@ public class Player extends Entity {
             y += MathUtils.sinDeg(direction) * SPEED * delta;
         }
 
-        Result result = game.world.move(item, x + bboxX, y + bboxY, new PlayerCollisionFilter());
+        Result result = game.world.move(item, x + bboxX, y + bboxY, PlayerCollisionFilter.instance);
         Rect rect = game.world.getRect(item);
         if (rect != null) {
             x = rect.x - bboxX;
