@@ -26,8 +26,8 @@ public class Player extends Entity {
         this.animation = playerAnimation;
         this.x = 100;
         this.y = 100;
-        this.bboxWidth = 10;
-        this.bboxHeight = 10;
+        this.bboxWidth = 25;
+        this.bboxHeight = 45;
         this.bboxX = 0;
         this.bboxY = 0;
         item = new Item<>(this);
@@ -64,7 +64,7 @@ public class Player extends Entity {
         if (fire) {
             Bullet b = new Bullet(game);
             b.x = x + bboxWidth / 2f - b.bboxWidth / 2f;
-            b.y = y + bboxHeight / 2f;  // spawn just above the player
+            b.y = y + bboxHeight / 2f;
             game.entities.add(b);
             game.world.update(b.item, b.x + b.bboxX, b.y + b.bboxY);
         }

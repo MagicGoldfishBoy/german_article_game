@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.SnapshotArray;
@@ -26,6 +27,7 @@ public class Main extends Game {
     Stage stage;
     World world;
     SnapshotArray entities;
+    public ShapeRenderer shapeRenderer;
 
     @Override
     public void create() {
@@ -41,6 +43,8 @@ public class Main extends Game {
 		batch = new SpriteBatch();
 
 		font = new BitmapFont();
+
+        shapeRenderer = new ShapeRenderer();
 
         FontGeneration.createFontGeneration();
 

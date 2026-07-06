@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.SnapshotArray;
@@ -22,6 +24,7 @@ public class TestMap implements Screen {
 	public static OrthographicCamera camera;
 	public static SnapshotArray<Entity> entities;
 	public static World<Entity> world;
+    public static ShapeRenderer shapeRenderer;
 	public static final float ENEMY_DELAY = .5f;
 	public float enemyTimer;
 	public static final Vector2 vector2 = new Vector2();
@@ -35,9 +38,11 @@ public class TestMap implements Screen {
 
     @Override
     public void show() {
+        
         entities = game.entities;
-        //world = new World<>();
         world = game.world;
+
+        shapeRenderer = game.shapeRenderer;
         player = new Player(game);
 
         player.item = new Item<>(player);
@@ -58,7 +63,17 @@ public class TestMap implements Screen {
         world.move(player.item, player.x + player.bboxX, player.y + player.bboxY, PlayerCollisionFilter.defaultFilter);
 
         Main.batch.begin();
+
         player.draw();
+
+        if (Config.isDebugMode) {
+            shapeRenderer.begin(ShapeType.Line);
+            shapeRenderer.setColor(Color.BLACK);
+            player.drawDebugHitbox(shapeRenderer, world);
+            shapeRenderer.end();
+        }
+
+        
 
         for (Entity i : entities) {
             i.act(delta);
