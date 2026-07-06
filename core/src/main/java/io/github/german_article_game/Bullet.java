@@ -12,6 +12,8 @@ import com.dongbat.jbump.Rect;
 import com.dongbat.jbump.Response;
 import com.dongbat.jbump.Response.Result;
 
+import io.github.german_article_game.Enemy.Enemy;
+
 public class Bullet extends Entity {
 
     static TextureAtlas atlas = new TextureAtlas("animations/bullets.atlas");
@@ -20,6 +22,7 @@ public class Bullet extends Entity {
 
     public static final float BULLET_SPEED = 1000f;
     public static final BulletCollisionFilter BULLET_COLLISION_FILTER = new BulletCollisionFilter();
+    public static Integer bulletStrength;
 
     final Main game;
     private float width;
@@ -28,6 +31,7 @@ public class Bullet extends Entity {
     public Bullet(Main game) {
         this.game = game;
         this.animation = bulletAnimation;
+        bulletStrength = 10;
         bboxX = 0;
         bboxY = 0;
         bboxWidth = bulletAnimation.getKeyFrames()[0].getRegionWidth();
@@ -52,6 +56,15 @@ public class Bullet extends Entity {
 
         for (int i = 0; i < result.projectedCollisions.size(); i++) {
             Collision collision = result.projectedCollisions.get(i);
+
+            Enemy enemy = (Enemy) collision.other.userData;
+
+            if (collision.other.userData instanceof Enemy) {
+                enemy.takeDamage(bulletStrength);
+
+                return;
+            }
+
             if (collision.other.userData instanceof Entity) {
 
                 game.entities.removeValue(this, true);
@@ -59,6 +72,8 @@ public class Bullet extends Entity {
                     game.world.remove(item);
                     item = null;
                 }
+
+                
                 return;
             }
         }
@@ -81,7 +96,7 @@ public class Bullet extends Entity {
     public static class BulletCollisionFilter implements CollisionFilter {
         @Override
         public Response filter(Item item, Item other) {
-            if (other.userData instanceof Entity) return Response.cross;
+            if (other.userData instanceof Enemy) return Response.cross;
             else return null;
         }
     }

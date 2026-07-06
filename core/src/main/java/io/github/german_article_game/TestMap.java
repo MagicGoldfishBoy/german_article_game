@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
+import io.github.german_article_game.Enemy.EnemyTest;
 import io.github.german_article_game.Player.PlayerCollisionFilter;
 
 public class TestMap implements Screen {
@@ -31,6 +32,7 @@ public class TestMap implements Screen {
 
     final Main game;
     public static Player player;
+    public static EnemyTest enemy;
 
     public TestMap(Main game) {
         this.game = game;
@@ -42,6 +44,7 @@ public class TestMap implements Screen {
         world = game.world;
         shapeRenderer = game.shapeRenderer;
         player = new Player(game);
+        enemy = new EnemyTest(game);
     }
 
     @Override
@@ -54,9 +57,16 @@ public class TestMap implements Screen {
 
         player.act(delta);
 
+        enemy.act(delta);
+
         Main.batch.begin();
 
         player.draw();
+
+        if (enemy.hp > 0) {
+            enemy.draw(); 
+        } 
+        
         
         for (Entity i : entities) {
             i.act(delta);
@@ -69,6 +79,7 @@ public class TestMap implements Screen {
             shapeRenderer.begin(ShapeType.Line);
             shapeRenderer.setColor(Color.BLACK);
             player.drawDebugHitbox(shapeRenderer, world);
+            enemy.drawDebugHitbox(shapeRenderer, world);
             for (Entity i : entities) {
                 i.drawDebugHitbox(shapeRenderer, world);
             };

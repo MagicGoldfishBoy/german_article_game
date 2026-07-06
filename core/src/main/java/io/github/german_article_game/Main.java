@@ -26,8 +26,8 @@ public class Main extends Game {
     FreeTypeFontGenerator generator;
     Skin CurrentSkin;
     Stage stage;
-    World world;
-    SnapshotArray entities;
+    public World world;
+    public SnapshotArray entities;
     public ShapeRenderer shapeRenderer;
 
     @Override

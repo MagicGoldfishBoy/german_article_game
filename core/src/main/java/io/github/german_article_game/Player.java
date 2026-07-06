@@ -30,6 +30,7 @@ public class Player extends Entity {
         this.bboxHeight = 45;
         this.bboxX = 0;
         this.bboxY = 0;
+        this.hp = 100;
         item = new Item<>(this);
         game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
     }

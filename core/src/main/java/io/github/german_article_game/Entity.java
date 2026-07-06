@@ -24,6 +24,7 @@ public abstract class Entity {
     public float gravityX;
     public float gravityY;
     public Item<Entity> item;
+    public Integer hp; 
     
     public abstract void act(float delta);
     
