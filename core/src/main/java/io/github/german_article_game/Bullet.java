@@ -36,7 +36,6 @@ public class Bullet extends Entity {
         width = bulletAnimation.getKeyFrames()[0].getRegionWidth();
         height = bulletAnimation.getKeyFrames()[0].getRegionHeight();
 
-        // Bullet hell: always fires straight up by default.
         deltaX = 0f;
         deltaY = BULLET_SPEED;
 
@@ -54,7 +53,7 @@ public class Bullet extends Entity {
         for (int i = 0; i < result.projectedCollisions.size(); i++) {
             Collision collision = result.projectedCollisions.get(i);
             if (collision.other.userData instanceof Entity) {
-                // Hit something: remove this bullet, no bounce.
+
                 game.entities.removeValue(this, true);
                 if (item != null) {
                     game.world.remove(item);
@@ -70,7 +69,6 @@ public class Bullet extends Entity {
             y = rect.y - bboxY;
         }
 
-        // Off-screen cleanup (tune bounds to your world/camera)
         if (y > Gdx.graphics.getHeight() + height) {
             game.entities.removeValue(this, true);
             if (item != null) {
