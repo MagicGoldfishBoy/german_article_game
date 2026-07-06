@@ -33,7 +33,6 @@ public class Main extends Game {
     @Override
     public void create() {
 
-        //viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gameplayViewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 

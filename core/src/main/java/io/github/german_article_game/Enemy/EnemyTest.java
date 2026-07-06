@@ -1,5 +1,6 @@
 package io.github.german_article_game.Enemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Rect;
 import com.dongbat.jbump.Response.Result;
+import com.dongbat.jbump.util.MathUtils;
 
 import io.github.german_article_game.Bullet;
 import io.github.german_article_game.Main;
@@ -40,15 +42,24 @@ public class EnemyTest extends Enemy {
         this.bboxX = 0;
         this.bboxY = 0;
         this.hp = 100;
+        EnemyTest.speed = 100f;
         item = new Item<>(this);
         game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
 
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void act(float delta) {
+        Float direction = 0f;
         if (!game.world.hasItem(item)) {
             return;
+        }
+        direction = EnemyMovePatterns.leftAndRight(this, game);
+        
+        if (direction != null) {
+            x += MathUtils.cosDeg(direction) * speed * delta;
+            y += MathUtils.sinDeg(direction) * speed * delta;
         }
         Result result = game.world.move(item, x + bboxX, y + bboxY, enemyCollisionFilter.instance);
         Rect rect = game.world.getRect(item);

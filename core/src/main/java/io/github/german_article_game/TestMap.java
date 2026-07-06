@@ -97,7 +97,7 @@ public class TestMap implements Screen {
 
         game.stage.getViewport().update(width, height, true);        
         game.viewport.update(width, height, true); 
-        Main.gameplayViewport.update(width, height); 
+        Main.gameplayViewport.update(width, height, true); 
     }
 
     @Override
