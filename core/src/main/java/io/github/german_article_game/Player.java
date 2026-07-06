@@ -64,10 +64,9 @@ public class Player extends Entity {
         if (fire) {
             Bullet b = new Bullet(game);
             b.x = x + bboxWidth / 2f - b.bboxWidth / 2f;
-            b.y = y + bboxHeight / 2f - b.bboxHeight / 2f;
-            b.direction = direction != null ? direction : 0f;
-
+            b.y = y + bboxHeight / 2f;  // spawn just above the player
             game.entities.add(b);
+            game.world.update(b.item, b.x + b.bboxX, b.y + b.bboxY);
         }
 
         if (direction != null) {
