@@ -28,10 +28,10 @@ public class Bullet extends Entity {
     public Bullet(Main game) {
         this.game = game;
         this.animation = bulletAnimation;
-        bboxX = 15;
-        bboxY = 15;
-        bboxWidth = 100;
-        bboxHeight = 100;
+        bboxX = 0;
+        bboxY = 0;
+        bboxWidth = 10;
+        bboxHeight = 10;
 
         width = bulletAnimation.getKeyFrames()[0].getRegionWidth();
         height = bulletAnimation.getKeyFrames()[0].getRegionHeight();

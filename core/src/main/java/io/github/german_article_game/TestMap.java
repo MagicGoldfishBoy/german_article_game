@@ -66,7 +66,6 @@ public class TestMap implements Screen {
 
         player.draw();
         
-
         for (Entity i : entities) {
             i.act(delta);
             i.draw();
@@ -84,7 +83,6 @@ public class TestMap implements Screen {
             shapeRenderer.end();
         }
 
-        game.stage.getViewport().apply();
         game.stage.act(delta);
         game.stage.draw();
     }
