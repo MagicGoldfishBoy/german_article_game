@@ -60,7 +60,7 @@ public class TestMap implements Screen {
 
         player.act(delta);
 
-        world.move(player.item, player.x + player.bboxX, player.y + player.bboxY, PlayerCollisionFilter.defaultFilter);
+        world.move(player.item, player.x + player.bboxX, player.y + player.bboxY, PlayerCollisionFilter.instance);
 
         Main.batch.begin();
 
@@ -78,9 +78,12 @@ public class TestMap implements Screen {
             shapeRenderer.begin(ShapeType.Line);
             shapeRenderer.setColor(Color.BLACK);
             player.drawDebugHitbox(shapeRenderer, world);
+            for (Entity i : entities) {
+                i.drawDebugHitbox(shapeRenderer, world);
+            };
             shapeRenderer.end();
         }
-        
+
         game.stage.getViewport().apply();
         game.stage.act(delta);
         game.stage.draw();

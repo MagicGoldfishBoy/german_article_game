@@ -84,11 +84,13 @@ public class Player extends Entity {
         animationTime += delta;
         }
 
-    public static class PlayerCollisionFilter implements CollisionFilter {
-        @Override
-        public Response filter(Item item, Item other) {
-            if (other.userData instanceof Entity) return Response.cross;
-            else return null;
+        public static class PlayerCollisionFilter implements CollisionFilter {
+            public static final PlayerCollisionFilter instance = new PlayerCollisionFilter();
+
+            @Override
+            public Response filter(Item item, Item other) {
+                if (other.userData instanceof Entity) return Response.cross;
+                else return null;
+            }
         }
-    }
 }
