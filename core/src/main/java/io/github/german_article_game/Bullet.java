@@ -62,6 +62,12 @@ public class Bullet extends Entity {
             if (collision.other.userData instanceof Enemy) {
                 enemy.takeDamage(bulletStrength);
 
+                game.entities.removeValue(this, true);
+                if (item != null) {
+                    game.world.remove(item);
+                    item = null;
+                }
+
                 return;
             }
 
@@ -73,7 +79,6 @@ public class Bullet extends Entity {
                     item = null;
                 }
 
-                
                 return;
             }
         }

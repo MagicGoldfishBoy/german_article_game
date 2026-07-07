@@ -36,7 +36,7 @@ public class EnemyTest extends Enemy {
         this.englishName = "Enemy";
         this.animation = enemyAnimation;
         this.x = 100;
-        this.y = 100;
+        this.y = 300;
         this.bboxWidth = 25;
         this.bboxHeight = 45;
         this.bboxX = 0;
