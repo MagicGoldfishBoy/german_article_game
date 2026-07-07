@@ -55,6 +55,7 @@ public class EnemyTest extends Enemy {
         if (!game.world.hasItem(item)) {
             return;
         }
+
         direction = EnemyMovePatterns.leftAndRight(this, game);
         
         if (direction != null) {
@@ -67,6 +68,8 @@ public class EnemyTest extends Enemy {
             x = rect.x - bboxX;
             y = rect.y - bboxY;
         }
+
+        EnemyMovePatterns.testPattern(this);
         animationTime += delta;
     }
     

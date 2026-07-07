@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.dongbat.jbump.World;
 
+import io.github.german_article_game.Enemy.EnemyMovePatterns;
+
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
 
@@ -29,10 +31,15 @@ public class Main extends Game {
     public World world;
     public SnapshotArray entities;
     public ShapeRenderer shapeRenderer;
+    public EnemyMovePatterns enemyMovePatterns;
 
     @Override
     public void create() {
 
+        if (Config.isDebugMode) {
+                Gdx.app.setLogLevel(com.badlogic.gdx.Application.LOG_DEBUG);
+                Gdx.app.log("Main", "logging unlocked");
+        }
         gameplayViewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -47,6 +54,8 @@ public class Main extends Game {
         shapeRenderer = new ShapeRenderer();
 
         FontGeneration.createFontGeneration();
+
+        enemyMovePatterns = new EnemyMovePatterns(this);
 
         world = new World<>();
         entities = new SnapshotArray<>();
