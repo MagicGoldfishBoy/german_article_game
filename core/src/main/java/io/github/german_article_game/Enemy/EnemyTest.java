@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Rect;
 import com.dongbat.jbump.Response.Result;
@@ -20,13 +21,17 @@ public class EnemyTest extends Enemy {
     public static final Animation<AtlasRegion> enemyAnimation =
         new Animation<>(1.5f / 30f, atlas.findRegions("player-normal"), PlayMode.LOOP);
 
-    final Main game;
+    Main game = new Main();
 
     public Bullet bulletType;
 
     public String germanName;
 
     public String englishName;
+
+    public EnemyMovePatterns movePatterns = new EnemyMovePatterns(game);
+
+    public Float onStageTime; 
 
     public EnemyTest(Main game) {
         super(game);
@@ -44,6 +49,7 @@ public class EnemyTest extends Enemy {
         this.hp = 100;
         EnemyTest.speed = 100f;
         item = new Item<>(this);
+        onStageTime = 0f;
         game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
 
     }
@@ -56,10 +62,17 @@ public class EnemyTest extends Enemy {
             return;
         }
 
-       // direction = EnemyMovePatterns.leftAndRight(this, game);
-        // EnemyMovePatterns.testPattern(this);
-        // EnemyMovePatterns.circle(this, 100, 10);
-        EnemyMovePatterns.oval(this, 100, 50, 10);        
+        //direction = movePatterns.leftAndRight(this, game);
+        //this.movePatterns.dispatch(this, game);
+        //
+        if (onStageTime < 5f) {
+           this.movePatterns.oval(this, 150, 50, 10);      
+        }
+        if (onStageTime >= 5f) {
+           this.movePatterns.circle(this, 100, 10); 
+        }
+             
+        //EnemyMovePatterns.dispatch(this, game);
         if (direction != null) {
             x += MathUtils.cosDeg(direction) * speed * delta;
             y += MathUtils.sinDeg(direction) * speed * delta;
@@ -73,6 +86,7 @@ public class EnemyTest extends Enemy {
 
 
         animationTime += delta;
+        onStageTime += delta;
     }
     
 }
