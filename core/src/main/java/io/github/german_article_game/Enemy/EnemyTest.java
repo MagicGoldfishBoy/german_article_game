@@ -56,8 +56,10 @@ public class EnemyTest extends Enemy {
             return;
         }
 
-        direction = EnemyMovePatterns.leftAndRight(this, game);
-        
+       // direction = EnemyMovePatterns.leftAndRight(this, game);
+        // EnemyMovePatterns.testPattern(this);
+        // EnemyMovePatterns.circle(this, 100, 10);
+        EnemyMovePatterns.oval(this, 100, 50, 10);        
         if (direction != null) {
             x += MathUtils.cosDeg(direction) * speed * delta;
             y += MathUtils.sinDeg(direction) * speed * delta;
@@ -69,7 +71,7 @@ public class EnemyTest extends Enemy {
             y = rect.y - bboxY;
         }
 
-        EnemyMovePatterns.testPattern(this);
+
         animationTime += delta;
     }
     
