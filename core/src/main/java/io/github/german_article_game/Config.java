@@ -35,6 +35,7 @@ public class Config {
     static int downKey = Keys.S;
     static int rightKey = Keys.D;
     static int fireKey = Keys.SPACE;
+    static int pauseKey = Keys.P;
 
     public Config() {
         kryo.register(Enum.class);

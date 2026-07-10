@@ -1,5 +1,6 @@
 package io.github.german_article_game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,14 +11,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
 import io.github.german_article_game.Enemy.EnemyTest;
-import io.github.german_article_game.Player.PlayerCollisionFilter;
 
 public class TestMap implements Screen {
 	public static SpriteBatch spriteBatch;
@@ -34,6 +30,8 @@ public class TestMap implements Screen {
     public static Player player;
     public static EnemyTest enemy;
 
+    
+
     public TestMap(Main game) {
         this.game = game;
     }
@@ -49,45 +47,50 @@ public class TestMap implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(Color.ROYAL);
-
-        Main.gameplayViewport.apply();
-        //game.viewport.apply();
-        Main.batch.setProjectionMatrix(game.viewport.getCamera().combined);
-
-        player.act(delta);
-
-        enemy.act(delta);
-
-        Main.batch.begin();
-
-        player.draw();
-
-        if (enemy.hp > 0) {
-            enemy.draw(); 
-        } 
-        
-        
-        for (Entity i : entities) {
-            i.act(delta);
-            i.draw();
-        };
-
-        Main.batch.end();
-
-        if (Config.isDebugMode) {
-            shapeRenderer.begin(ShapeType.Line);
-            shapeRenderer.setColor(Color.BLACK);
-            player.drawDebugHitbox(shapeRenderer, world);
-            enemy.drawDebugHitbox(shapeRenderer, world);
-            for (Entity i : entities) {
-                i.drawDebugHitbox(shapeRenderer, world);
-            };
-            shapeRenderer.end();
+        boolean pause = Gdx.input.isKeyJustPressed(Config.pauseKey);
+        if (pause) {
+            game.isPaused = !game.isPaused;
         }
+            
+        System.out.println(game.isPaused);
+            ScreenUtils.clear(Color.ROYAL);
 
-        game.stage.act(delta);
-        game.stage.draw();
+            Main.gameplayViewport.apply();
+            //game.viewport.apply();
+            Main.batch.setProjectionMatrix(game.viewport.getCamera().combined);
+
+            player.act(delta);
+
+            enemy.act(delta);
+
+            Main.batch.begin();
+
+            player.draw();
+
+            if (enemy.hp > 0) {
+                enemy.draw(); 
+            } 
+            
+            for (Entity i : entities) {
+                i.act(delta);
+                i.draw();
+            };
+
+            Main.batch.end();
+
+            if (Config.isDebugMode) {
+                shapeRenderer.begin(ShapeType.Line);
+                shapeRenderer.setColor(Color.BLACK);
+                player.drawDebugHitbox(shapeRenderer, world);
+                enemy.drawDebugHitbox(shapeRenderer, world);
+                for (Entity i : entities) {
+                    i.drawDebugHitbox(shapeRenderer, world);
+                };
+                shapeRenderer.end();
+            }
+
+            game.stage.act(delta);
+            game.stage.draw();
     }
 
     @Override

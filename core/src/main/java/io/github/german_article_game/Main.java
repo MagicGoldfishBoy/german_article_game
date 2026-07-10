@@ -32,6 +32,7 @@ public class Main extends Game {
     public SnapshotArray entities;
     public ShapeRenderer shapeRenderer;
     public EnemyMovePatterns enemyMovePatterns;
+    public boolean isPaused;
 
     @Override
     public void create() {
@@ -56,6 +57,7 @@ public class Main extends Game {
         FontGeneration.createFontGeneration();
 
         enemyMovePatterns = new EnemyMovePatterns(this);
+        isPaused = false;
 
         world = new World<>();
         entities = new SnapshotArray<>();

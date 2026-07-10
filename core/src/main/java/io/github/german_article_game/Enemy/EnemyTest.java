@@ -67,6 +67,9 @@ public class EnemyTest extends Enemy {
         if (!game.world.hasItem(item)) {
             return;
         }
+        if (!game.isPaused) {
+            
+        
 
         //direction = movePatterns.leftAndRight(this, game);
         //this.movePatterns.dispatch(this, game);
@@ -116,7 +119,7 @@ public class EnemyTest extends Enemy {
 
 
         animationTime += delta;
-        onStageTime += delta;
+        onStageTime += delta;}
     }
     
 }
