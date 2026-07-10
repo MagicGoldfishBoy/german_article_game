@@ -20,8 +20,8 @@ public abstract class Enemy extends Entity {
 
     public String englishName;
 
-    public static float speed
-    ;
+    public static float speed;
+    
     Bullet bullet;
 
     public Enemy (Main game) {

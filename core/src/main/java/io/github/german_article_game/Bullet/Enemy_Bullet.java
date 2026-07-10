@@ -70,11 +70,17 @@ public class Enemy_Bullet extends Bullet {
         }
 
         if (y > Gdx.graphics.getHeight() + height) {
-            game.entities.removeValue(this, true);
-            if (item != null) {
-                game.world.remove(item);
-                item = null;
-            }
+            destroyBullet();
+        }
+        if (y < 0) {
+            destroyBullet();
+        }
+        if (x > Gdx.graphics.getWidth() + width) {
+            destroyBullet();
+            System.out.println("bullet Destroyed");
+        }
+        if (x < 0) {
+            destroyBullet();
         }
     }
 
