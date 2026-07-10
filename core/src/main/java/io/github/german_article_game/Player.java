@@ -20,6 +20,8 @@ public class Player extends Entity {
     public static final Animation<AtlasRegion> playerAnimation =
         new Animation<>(1.5f / 30f, atlas.findRegions("player-normal"), PlayMode.LOOP);
 
+    //AtlasRegion region = animation.getKeyFrame(animationTime);
+
     public static final float SPEED = 200f;
     Player_Bullet bullet;
     final Main game;
@@ -29,10 +31,10 @@ public class Player extends Entity {
         this.animation = playerAnimation;
         this.x = 100;
         this.y = 100;
-        this.bboxWidth = 25;
-        this.bboxHeight = 45;
-        this.bboxX = 0;
-        this.bboxY = 0;
+        this.bboxWidth = 15;
+        this.bboxHeight = 40;
+        this.bboxX = (animation.getKeyFrame(1).getRegionWidth()- this.bboxWidth ) / 2;
+        this.bboxY = (animation.getKeyFrame(1).getRegionHeight()- this.bboxHeight ) / 2;;
         this.hp = 100;
         item = new Item<>(this);
         game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
