@@ -4,10 +4,10 @@ import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Response;
 
-import io.github.german_article_game.Bullet;
 import io.github.german_article_game.Entity;
 import io.github.german_article_game.Main;
 import io.github.german_article_game.Player;
+import io.github.german_article_game.Bullet.Bullet;
 import io.github.german_article_game.Player.PlayerCollisionFilter;
 
 public abstract class Enemy extends Entity {

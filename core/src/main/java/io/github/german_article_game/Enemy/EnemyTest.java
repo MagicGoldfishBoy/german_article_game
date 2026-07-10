@@ -11,8 +11,10 @@ import com.dongbat.jbump.Rect;
 import com.dongbat.jbump.Response.Result;
 import com.dongbat.jbump.util.MathUtils;
 
-import io.github.german_article_game.Bullet;
 import io.github.german_article_game.Main;
+import io.github.german_article_game.Bullet.Bullet;
+import io.github.german_article_game.Bullet.Enemy_Bullet;
+import io.github.german_article_game.Bullet.Player_Bullet;
 import io.github.german_article_game.Player.PlayerCollisionFilter;
 
 public class EnemyTest extends Enemy {
@@ -32,6 +34,10 @@ public class EnemyTest extends Enemy {
     public EnemyMovePatterns movePatterns = new EnemyMovePatterns(game);
 
     public Float onStageTime; 
+
+    public static final float bulletDelay = 0.15f;
+
+    public float bulletTimer;
 
     public EnemyTest(Main game) {
         super(game);
@@ -83,6 +89,30 @@ public class EnemyTest extends Enemy {
             x = rect.x - bboxX;
             y = rect.y - bboxY;
         }
+
+        if (bulletTimer > 0) {
+            bulletTimer -= delta;
+            if (bulletTimer < 0) bulletTimer = 0;
+        }
+
+        if (bulletTimer == 0) {
+            bulletTimer = bulletDelay;
+            Bullet bullet = new Enemy_Bullet(game);
+            bullet.x = x + bboxWidth / 2.5f;
+            bullet.y = y + bboxHeight;
+            game.entities.add(bullet);
+            game.world.update(bullet.item, bullet.x + bullet.bboxX, bullet.y + bullet.bboxY);
+        }
+
+        if (bulletTimer == 0.10f) {
+            bulletTimer = bulletDelay;
+            Bullet bullet = new Enemy_Bullet(game);
+            bullet.x = x + bboxWidth / 2.5f;
+            bullet.y = y + bboxHeight;
+            game.entities.add(bullet);
+            game.world.update(bullet.item, bullet.x + bullet.bboxX, bullet.y + bullet.bboxY);
+        }
+
 
 
         animationTime += delta;

@@ -1,4 +1,4 @@
-package io.github.german_article_game;
+package io.github.german_article_game.Bullet;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -12,6 +12,8 @@ import com.dongbat.jbump.Rect;
 import com.dongbat.jbump.Response;
 import com.dongbat.jbump.Response.Result;
 
+import io.github.german_article_game.Entity;
+import io.github.german_article_game.Main;
 import io.github.german_article_game.Enemy.Enemy;
 
 public class Bullet extends Entity {
@@ -20,8 +22,8 @@ public class Bullet extends Entity {
     public static final Animation<AtlasRegion> bulletAnimation =
         new Animation<>(1.5f / 30f, atlas.findRegions("bullet-normal"), PlayMode.LOOP);
 
-    public static final float BULLET_SPEED = 1000f;
-    public static final BulletCollisionFilter BULLET_COLLISION_FILTER = new BulletCollisionFilter();
+    public static final float bulletSpeed = 1000f;
+    public static final BulletCollisionFilter bulletCollissionFilter = new BulletCollisionFilter();
     public static Integer bulletStrength;
 
     final Main game;
@@ -41,7 +43,7 @@ public class Bullet extends Entity {
         height = bulletAnimation.getKeyFrames()[0].getRegionHeight();
 
         deltaX = 0f;
-        deltaY = BULLET_SPEED;
+        deltaY = bulletSpeed;
 
         item = new Item<>(this);
         game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
@@ -52,7 +54,7 @@ public class Bullet extends Entity {
         x += delta * deltaX;
         y += delta * deltaY;
 
-        Result result = game.world.move(item, x + bboxX, y + bboxY, BULLET_COLLISION_FILTER);
+        Result result = game.world.move(item, x + bboxX, y + bboxY, bulletCollissionFilter);
 
         for (int i = 0; i < result.projectedCollisions.size(); i++) {
             Collision collision = result.projectedCollisions.get(i);
