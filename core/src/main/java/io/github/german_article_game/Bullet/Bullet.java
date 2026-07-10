@@ -100,6 +100,14 @@ public class Bullet extends Entity {
         }
     }
 
+    protected void destroyBullet() {
+        game.entities.removeValue(this, true);
+        if (item != null) {
+            game.world.remove(item);
+            item = null;
+        }
+    }
+
     public static class BulletCollisionFilter implements CollisionFilter {
         @Override
         public Response filter(Item item, Item other) {

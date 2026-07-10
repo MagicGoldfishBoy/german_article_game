@@ -77,7 +77,6 @@ public class Enemy_Bullet extends Bullet {
         }
         if (x > Gdx.graphics.getWidth() + width) {
             destroyBullet();
-            System.out.println("bullet Destroyed");
         }
         if (x < 0) {
             destroyBullet();
@@ -89,14 +88,6 @@ public class Enemy_Bullet extends Bullet {
         public Response filter(Item item, Item other) {
             if (other.userData instanceof Player) return Response.cross;
             else return null;
-        }
-    }
-
-    private void destroyBullet() {
-        game.entities.removeValue(this, true);
-        if (item != null) {
-            game.world.remove(item);
-            item = null;
         }
     }
     

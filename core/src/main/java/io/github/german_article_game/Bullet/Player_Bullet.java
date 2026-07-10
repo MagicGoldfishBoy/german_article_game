@@ -40,25 +40,18 @@ public class Player_Bullet extends Bullet {
             if (collision.other.userData instanceof Enemy) {
                 enemy.takeDamage(bulletStrength);
 
-                game.entities.removeValue(this, true);
-                if (item != null) {
-                    game.world.remove(item);
-                    item = null;
-                }
+                destroyBullet();
 
                 return;
             }
 
             if (collision.other.userData instanceof Entity) {
 
-                game.entities.removeValue(this, true);
-                if (item != null) {
-                    game.world.remove(item);
-                    item = null;
-                }
+                destroyBullet();
 
                 return;
             }
+
         }
 
         Rect rect = game.world.getRect(item);
@@ -68,11 +61,16 @@ public class Player_Bullet extends Bullet {
         }
 
         if (y > Gdx.graphics.getHeight() + height) {
-            game.entities.removeValue(this, true);
-            if (item != null) {
-                game.world.remove(item);
-                item = null;
-            }
+            destroyBullet();
+        }
+        if (y < 0) {
+            destroyBullet();
+        }
+        if (x > Gdx.graphics.getWidth() + width) {
+            destroyBullet();
+        }
+        if (x < 0) {
+            destroyBullet();
         }
     }
     

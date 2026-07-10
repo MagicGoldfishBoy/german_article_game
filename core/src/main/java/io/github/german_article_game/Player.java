@@ -82,7 +82,7 @@ public class Player extends Entity {
 
         if (fire) {
             Bullet bullet = new Player_Bullet(game);
-            bullet.x = x + bboxWidth / 2.5f;
+            bullet.x = x + animation.getKeyFrame(1).getRegionWidth() / 2.5f;
             bullet.y = y + bboxHeight;
             game.entities.add(bullet);
             game.world.update(bullet.item, bullet.x + bullet.bboxX, bullet.y + bullet.bboxY);
