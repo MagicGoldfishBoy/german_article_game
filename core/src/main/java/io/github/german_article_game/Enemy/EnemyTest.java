@@ -13,6 +13,7 @@ import com.dongbat.jbump.util.MathUtils;
 
 import io.github.german_article_game.Main;
 import io.github.german_article_game.Bullet.Bullet;
+import io.github.german_article_game.Bullet.BulletManager;
 import io.github.german_article_game.Bullet.Enemy_Bullet;
 import io.github.german_article_game.Bullet.Player_Bullet;
 import io.github.german_article_game.Player.PlayerCollisionFilter;
@@ -23,7 +24,8 @@ public class EnemyTest extends Enemy {
     public static final Animation<AtlasRegion> enemyAnimation =
         new Animation<>(1.5f / 30f, atlas.findRegions("player-normal"), PlayMode.LOOP);
 
-    Main game = new Main();
+    final Main game;
+    public EnemyMovePatterns movePatterns;
 
     public Bullet bulletType;
 
@@ -31,18 +33,23 @@ public class EnemyTest extends Enemy {
 
     public String englishName;
 
-    public EnemyMovePatterns movePatterns = new EnemyMovePatterns(game);
-
     public Float onStageTime; 
 
     public static final float bulletDelay = 0.15f;
 
     public float bulletTimer;
 
+    BulletManager bulletManager;
+
     public EnemyTest(Main game) {
         super(game);
+        this.game = game;                      
+        this.movePatterns = new EnemyMovePatterns(this.game); 
 
-        this.game = game;
+        this.bulletManager = game.bulletManager;
+    }
+
+    public void init(float x, float y, float deltaX, float deltaY) {
         this.germanName = "Feind";
         this.englishName = "Enemy";
         this.animation = enemyAnimation;
@@ -56,8 +63,10 @@ public class EnemyTest extends Enemy {
         EnemyTest.speed = 100f;
         item = new Item<>(this);
         onStageTime = 0f;
+        if (item == null) {
+            item = new Item<>(this);
+        }
         game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
-
     }
 
     @SuppressWarnings("unused")
@@ -95,31 +104,31 @@ public class EnemyTest extends Enemy {
 
         if (bulletTimer > 0) {
             bulletTimer -= delta;
-            if (bulletTimer < 0) bulletTimer = 0;
+            if (bulletTimer <= 0f) {
+                bulletTimer = bulletDelay;
+                fireBullet();
+            }
         }
 
         if (bulletTimer == 0) {
-            bulletTimer = bulletDelay;
-            Bullet bullet = new Enemy_Bullet(game);
-            bullet.x = x + bboxWidth / 2.5f;
-            bullet.y = y + bboxHeight;
-            game.entities.add(bullet);
-            game.world.update(bullet.item, bullet.x + bullet.bboxX, bullet.y + bullet.bboxY);
+            fireBullet();
         }
 
         if (bulletTimer == 0.10f) {
-            bulletTimer = bulletDelay;
-            Bullet bullet = new Enemy_Bullet(game);
-            bullet.x = x + bboxWidth / 2.5f;
-            bullet.y = y + bboxHeight;
-            game.entities.add(bullet);
-            game.world.update(bullet.item, bullet.x + bullet.bboxX, bullet.y + bullet.bboxY);
+            fireBullet();
         }
 
 
 
         animationTime += delta;
         onStageTime += delta;}
+    }
+
+    public void fireBullet() {
+        bulletTimer = bulletDelay;
+        Bullet bullet = new Enemy_Bullet(game);
+        bullet.init(x + bboxWidth / 2.5f, y + bboxHeight, 0f, -Enemy_Bullet.bulletSpeed);
+        game.entities.add(bullet);
     }
     
 }

@@ -15,9 +15,6 @@ import io.github.german_article_game.Enemy.Enemy;
 
 public class Enemy_Bullet extends Bullet {
 
-    private float width;
-    private float height;
-
     public static final float bulletSpeed = 100f;
 
     public static final EnemyBulletCollisionFilter bulletCollisionFilter = new EnemyBulletCollisionFilter();
@@ -27,8 +24,24 @@ public class Enemy_Bullet extends Bullet {
         deltaY = -bulletSpeed;
     }
 
+    // public void init(float x, float y, float deltaX, float deltaY) {
+    //     this.x = x;
+    //     this.y = y;
+    //     this.alive = true;
+    //     this.deltaX = deltaX;
+    //     this.deltaY = deltaY;
+
+    //     if (item == null) {
+    //         item = new Item<>(this);
+    //     }
+    //     game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
+    // }
+
     @Override
     public void act(float delta) {
+        if (!alive || item == null) {
+            return;
+        }
         x += delta * deltaX;
         y += delta * deltaY;
 
@@ -39,18 +52,13 @@ public class Enemy_Bullet extends Bullet {
         for (int i = 0; i < result.projectedCollisions.size(); i++) {
             Collision collision = result.projectedCollisions.get(i);
 
-            
-
+    
             if (collision.other.userData instanceof Player) {
 
                 Player player = (Player) collision.other.userData;
                 player.takeDamage(bulletStrength);
 
-                game.entities.removeValue(this, true);
-                if (item != null) {
-
-                    destroyBullet();
-                }
+                destroyBullet();
 
                 return;
             }

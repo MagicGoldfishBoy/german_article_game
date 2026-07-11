@@ -13,6 +13,7 @@ import com.dongbat.jbump.Response;
 import com.dongbat.jbump.Response.Result;
 
 import io.github.german_article_game.Bullet.Bullet;
+import io.github.german_article_game.Bullet.BulletManager;
 import io.github.german_article_game.Bullet.Player_Bullet;
 
 public class Player extends Entity {
@@ -20,26 +21,27 @@ public class Player extends Entity {
     public static final Animation<AtlasRegion> playerAnimation =
         new Animation<>(1.5f / 30f, atlas.findRegions("player-normal"), PlayMode.LOOP);
 
-    //AtlasRegion region = animation.getKeyFrame(animationTime);
-
     public static final float SPEED = 200f;
     Player_Bullet bullet;
+
     final Main game;
+    BulletManager bulletManager;
 
     public Player(Main game) {
-        this.game = game;
+        this.game = game;   // store the real instance passed in
         this.animation = playerAnimation;
         this.x = 100;
         this.y = 100;
         this.bboxWidth = 15;
         this.bboxHeight = 40;
-        this.bboxX = (animation.getKeyFrame(1).getRegionWidth()- this.bboxWidth ) / 2;
-        this.bboxY = (animation.getKeyFrame(1).getRegionHeight()- this.bboxHeight ) / 2;;
+        this.bboxX = (animation.getKeyFrame(1).getRegionWidth() - this.bboxWidth) / 2;
+        this.bboxY = (animation.getKeyFrame(1).getRegionHeight() - this.bboxHeight) / 2;
         this.hp = 100;
         item = new Item<>(this);
-        game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
-    }
+        this.game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
 
+        this.bulletManager = game.bulletManager;
+    }
     public void takeDamage(Integer damage) {
         System.out.println(this.hp);
         if (this.hp - damage > 0) {
@@ -81,11 +83,13 @@ public class Player extends Entity {
         }
 
         if (fire) {
-            Bullet bullet = new Player_Bullet(game);
-            bullet.x = x + animation.getKeyFrame(1).getRegionWidth() / 2.5f;
-            bullet.y = y + bboxHeight;
-            game.entities.add(bullet);
-            game.world.update(bullet.item, bullet.x + bullet.bboxX, bullet.y + bullet.bboxY);
+            
+            bulletManager.spawnBullet(x + animation.getKeyFrame(1).getRegionWidth() / 2.5f, y + bboxHeight, 0f, Bullet.bulletSpeed);
+            // Bullet bullet = new Player_Bullet(game);
+            // bullet.x = x + animation.getKeyFrame(1).getRegionWidth() / 2.5f;
+            // bullet.y = y + bboxHeight;
+            // game.entities.add(bullet);
+            // game.world.update(bullet.item, bullet.x + bullet.bboxX, bullet.y + bullet.bboxY);
         }
 
         if (direction != null) {

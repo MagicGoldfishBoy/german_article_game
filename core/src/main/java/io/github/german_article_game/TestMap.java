@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.dongbat.jbump.World;
 
+import io.github.german_article_game.Bullet.BulletManager;
 import io.github.german_article_game.Enemy.EnemyTest;
 
 public class TestMap implements Screen {
@@ -29,6 +31,7 @@ public class TestMap implements Screen {
     final Main game;
     public static Player player;
     public static EnemyTest enemy;
+    BulletManager bulletManager;
 
     
 
@@ -43,6 +46,7 @@ public class TestMap implements Screen {
         shapeRenderer = game.shapeRenderer;
         player = new Player(game);
         enemy = new EnemyTest(game);
+        enemy.init(enemy.x, enemy.y, enemy.deltaX, enemy.deltaY);
     }
 
     @Override
@@ -52,7 +56,7 @@ public class TestMap implements Screen {
             game.isPaused = !game.isPaused;
         }
             
-        System.out.println(game.isPaused);
+        //System.out.println(game.isPaused);
             ScreenUtils.clear(Color.ROYAL);
 
             Main.gameplayViewport.apply();
@@ -75,7 +79,7 @@ public class TestMap implements Screen {
                 i.act(delta);
                 i.draw();
             };
-
+            player.bulletManager.updateAndRender(delta, game.batch);
             Main.batch.end();
 
             if (Config.isDebugMode) {

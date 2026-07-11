@@ -27,8 +27,9 @@ public class Bullet extends Entity {
     public static Integer bulletStrength;
 
     final Main game;
-    private float width;
-    private float height;
+    protected float width;
+    protected float height;
+    public boolean alive = false;
 
     public Bullet(Main game) {
         this.game = game;
@@ -44,13 +45,26 @@ public class Bullet extends Entity {
 
         deltaX = 0f;
         deltaY = bulletSpeed;
+    }
 
-        item = new Item<>(this);
+    public void init(float x, float y, float deltaX, float deltaY) {
+        this.x = x;
+        this.y = y;
+        this.alive = true;
+        this.deltaX = deltaX;
+        this.deltaY = deltaY;
+
+        if (item == null) {
+            item = new Item<>(this);
+        }
         game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
     }
 
     @Override
     public void act(float delta) {
+        if (!alive || item == null) {
+            return;
+        }
         x += delta * deltaX;
         y += delta * deltaY;
 
@@ -64,22 +78,14 @@ public class Bullet extends Entity {
             if (collision.other.userData instanceof Enemy) {
                 enemy.takeDamage(bulletStrength);
 
-                game.entities.removeValue(this, true);
-                if (item != null) {
-                    game.world.remove(item);
-                    item = null;
-                }
+                destroyBullet();
 
                 return;
             }
 
             if (collision.other.userData instanceof Entity) {
 
-                game.entities.removeValue(this, true);
-                if (item != null) {
-                    game.world.remove(item);
-                    item = null;
-                }
+                destroyBullet();
 
                 return;
             }
@@ -92,20 +98,25 @@ public class Bullet extends Entity {
         }
 
         if (y > Gdx.graphics.getHeight() + height) {
-            game.entities.removeValue(this, true);
-            if (item != null) {
-                game.world.remove(item);
-                item = null;
-            }
+            destroyBullet();
         }
     }
 
     protected void destroyBullet() {
+        alive = false;
         game.entities.removeValue(this, true);
         if (item != null) {
             game.world.remove(item);
             item = null;
         }
+    }
+
+    public void reset() {
+        this.x = 0;
+        this.y = 0;
+        this.deltaX = 0;
+        this.deltaY = 0;
+        this.alive = false;
     }
 
     public static class BulletCollisionFilter implements CollisionFilter {

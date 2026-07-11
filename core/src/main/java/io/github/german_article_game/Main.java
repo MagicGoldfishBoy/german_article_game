@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.dongbat.jbump.World;
 
+import io.github.german_article_game.Bullet.BulletManager;
 import io.github.german_article_game.Enemy.EnemyMovePatterns;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -33,6 +34,7 @@ public class Main extends Game {
     public ShapeRenderer shapeRenderer;
     public EnemyMovePatterns enemyMovePatterns;
     public boolean isPaused;
+    public BulletManager bulletManager;
 
     @Override
     public void create() {
@@ -41,6 +43,10 @@ public class Main extends Game {
                 Gdx.app.setLogLevel(com.badlogic.gdx.Application.LOG_DEBUG);
                 Gdx.app.log("Main", "logging unlocked");
         }
+
+        world = new World<>();
+        entities = new SnapshotArray<>(); 
+
         gameplayViewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -57,10 +63,10 @@ public class Main extends Game {
         FontGeneration.createFontGeneration();
 
         enemyMovePatterns = new EnemyMovePatterns(this);
+
+        bulletManager = new BulletManager(this);
         isPaused = false;
 
-        world = new World<>();
-        entities = new SnapshotArray<>();
 
 		buttonFont = FontGeneration.buttonFont;
         titleFont = FontGeneration.titleFont;
