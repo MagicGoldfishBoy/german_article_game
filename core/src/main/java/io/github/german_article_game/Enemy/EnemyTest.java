@@ -14,8 +14,8 @@ import com.dongbat.jbump.util.MathUtils;
 import io.github.german_article_game.Main;
 import io.github.german_article_game.Bullet.Bullet;
 import io.github.german_article_game.Bullet.BulletManager;
-import io.github.german_article_game.Bullet.Enemy_Bullet;
-import io.github.german_article_game.Bullet.Player_Bullet;
+import io.github.german_article_game.Bullet.EnemyBullet;
+import io.github.german_article_game.Bullet.PlayerBullet;
 import io.github.german_article_game.Player.PlayerCollisionFilter;
 
 public class EnemyTest extends Enemy {
@@ -35,7 +35,7 @@ public class EnemyTest extends Enemy {
 
     public Float onStageTime; 
 
-    public static final float bulletDelay = 0.15f;
+    public static final float bulletDelay = 0.25f;
 
     public float bulletTimer;
 
@@ -84,10 +84,13 @@ public class EnemyTest extends Enemy {
         //this.movePatterns.dispatch(this, game);
         //
         if (onStageTime < 5f) {
-           this.movePatterns.oval(this, 150, 50, 10);      
+           this.movePatterns.oval(this, 150, 50, 5);      
         }
         if (onStageTime >= 5f) {
-           this.movePatterns.circle(this, 100, 10); 
+           this.movePatterns.circle(this, 100, 5); 
+        }
+        if (onStageTime >= 10f) {
+           this.movePatterns.figureEight(this, 200, 2);
         }
              
         //EnemyMovePatterns.dispatch(this, game);
@@ -104,14 +107,12 @@ public class EnemyTest extends Enemy {
 
         if (bulletTimer > 0) {
             bulletTimer -= delta;
-            if (bulletTimer > 0.142f) {
-                fireBullet();
-            }
             if (bulletTimer <= 0f) {
                 fireDiagonalBullet(100);
                 fireDiagonalBullet(50);
                 fireDiagonalBullet(-100);
                 fireDiagonalBullet(-50);
+                fireBullet();
             }
         }
 
@@ -126,14 +127,14 @@ public class EnemyTest extends Enemy {
     public void fireBullet() {
         bulletTimer = bulletDelay;
         game.enemyBulletManager.spawnBullet(
-        x + bboxWidth / 2.5f, y + bboxHeight, 0f, -Enemy_Bullet.bulletSpeed
+        x + bboxWidth / 2.5f, y + bboxHeight, 0f, -EnemyBullet.bulletSpeed
         );
     }
 
     public void fireDiagonalBullet(float angle) {
         bulletTimer = bulletDelay;
         game.enemyBulletManager.spawnBullet(
-        x + bboxWidth / 2.5f, y + bboxHeight, angle, -Enemy_Bullet.bulletSpeed
+        x + bboxWidth / 2.5f, y + bboxHeight, angle, -EnemyBullet.bulletSpeed
         );
     }
     

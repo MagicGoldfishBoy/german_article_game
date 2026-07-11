@@ -13,29 +13,16 @@ import io.github.german_article_game.Main;
 import io.github.german_article_game.Player;
 import io.github.german_article_game.Enemy.Enemy;
 
-public class Enemy_Bullet extends Bullet {
+public class EnemyBullet extends Bullet {
 
-    public static final float bulletSpeed = 100f;
+    public static final float bulletSpeed = 50f;
 
     public static final EnemyBulletCollisionFilter bulletCollisionFilter = new EnemyBulletCollisionFilter();
 
-    public Enemy_Bullet(Main game) {
+    public EnemyBullet(Main game) {
         super(game);
         deltaY = -bulletSpeed;
     }
-
-    // public void init(float x, float y, float deltaX, float deltaY) {
-    //     this.x = x;
-    //     this.y = y;
-    //     this.alive = true;
-    //     this.deltaX = deltaX;
-    //     this.deltaY = deltaY;
-
-    //     if (item == null) {
-    //         item = new Item<>(this);
-    //     }
-    //     game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
-    // }
 
     @Override
     public void act(float delta) {

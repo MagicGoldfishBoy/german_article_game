@@ -9,12 +9,12 @@ import io.github.german_article_game.Entity;
 import io.github.german_article_game.Main;
 import io.github.german_article_game.Enemy.Enemy;
 
-public class Player_Bullet extends Bullet {
+public class PlayerBullet extends Bullet {
 
     private float width;
     private float height;
 
-    public Player_Bullet(Main game) {
+    public PlayerBullet(Main game) {
         
         super(game);
 

@@ -15,8 +15,8 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.dongbat.jbump.World;
 
 import io.github.german_article_game.Bullet.BulletManager;
-import io.github.german_article_game.Bullet.Enemy_Bullet;
-import io.github.german_article_game.Bullet.Player_Bullet;
+import io.github.german_article_game.Bullet.EnemyBullet;
+import io.github.german_article_game.Bullet.PlayerBullet;
 import io.github.german_article_game.Enemy.EnemyMovePatterns;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -67,10 +67,8 @@ public class Main extends Game {
 
         enemyMovePatterns = new EnemyMovePatterns(this);
 
-        bulletManager = new BulletManager(this, () -> new Player_Bullet(this));
-        enemyBulletManager = new BulletManager(this, () -> new Enemy_Bullet(this));
-        
-        isPaused = false;
+        bulletManager = new BulletManager(this, () -> Config.currentPlayerBullet.apply(this));
+        enemyBulletManager = new BulletManager(this, () -> new EnemyBullet(this));
 
 
 		buttonFont = FontGeneration.buttonFont;

@@ -14,7 +14,7 @@ import com.dongbat.jbump.Response.Result;
 
 import io.github.german_article_game.Bullet.Bullet;
 import io.github.german_article_game.Bullet.BulletManager;
-import io.github.german_article_game.Bullet.Player_Bullet;
+import io.github.german_article_game.Bullet.PlayerBullet;
 
 public class Player extends Entity {
     static TextureAtlas atlas = new TextureAtlas("animations/peopleskin.atlas");
@@ -22,7 +22,7 @@ public class Player extends Entity {
         new Animation<>(1.5f / 30f, atlas.findRegions("player-normal"), PlayMode.LOOP);
 
     public static final float SPEED = 200f;
-    Player_Bullet bullet;
+    PlayerBullet bullet;
 
     final Main game;
     BulletManager bulletManager;

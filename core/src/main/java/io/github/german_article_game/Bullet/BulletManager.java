@@ -41,7 +41,6 @@ public class BulletManager {
         }
     }
 
-    /** Call on screen dispose/teardown to release everything cleanly. */
     public void dispose() {
         activeBullets.clear();
         bulletPool.clear();

@@ -3,12 +3,16 @@ package io.github.german_article_game;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.function.Function;
 
 import com.badlogic.gdx.Input.Keys;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.KryoException;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+
+import io.github.german_article_game.Bullet.Bullet;
+import io.github.german_article_game.Bullet.PlayerBullet;
 
 public class Config {
 
@@ -36,6 +40,9 @@ public class Config {
     static int rightKey = Keys.D;
     static int fireKey = Keys.SPACE;
     static int pauseKey = Keys.P;
+
+
+    public static Function<Main, Bullet> currentPlayerBullet = PlayerBullet::new;
 
     public Config() {
         kryo.register(Enum.class);
