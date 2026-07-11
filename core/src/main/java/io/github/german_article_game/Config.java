@@ -13,6 +13,7 @@ import com.esotericsoftware.kryo.io.Output;
 
 import io.github.german_article_game.Bullet.Bullet;
 import io.github.german_article_game.Bullet.PlayerBullet;
+import io.github.german_article_game.Bullet.PlayerSpreadingBullet;
 
 public class Config {
 
@@ -42,7 +43,7 @@ public class Config {
     static int pauseKey = Keys.P;
 
 
-    public static Function<Main, Bullet> currentPlayerBullet = PlayerBullet::new;
+    public static Function<Main, Bullet> currentPlayerBullet = PlayerSpreadingBullet::new;
 
     public Config() {
         kryo.register(Enum.class);

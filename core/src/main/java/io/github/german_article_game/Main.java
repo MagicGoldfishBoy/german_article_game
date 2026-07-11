@@ -17,6 +17,7 @@ import com.dongbat.jbump.World;
 import io.github.german_article_game.Bullet.BulletManager;
 import io.github.german_article_game.Bullet.EnemyBullet;
 import io.github.german_article_game.Bullet.PlayerBullet;
+import io.github.german_article_game.Bullet.PlayerSpreadingBullet;
 import io.github.german_article_game.Enemy.EnemyMovePatterns;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -67,8 +68,7 @@ public class Main extends Game {
 
         enemyMovePatterns = new EnemyMovePatterns(this);
 
-        bulletManager = new BulletManager(this, () -> Config.currentPlayerBullet.apply(this));
-        enemyBulletManager = new BulletManager(this, () -> new EnemyBullet(this));
+
 
 
 		buttonFont = FontGeneration.buttonFont;
@@ -84,6 +84,10 @@ public class Main extends Game {
 
         Config config = new Config();
         config.loadAllSettings();
+
+        bulletManager = new BulletManager(this, () -> config.currentPlayerBullet.apply(this));
+        System.out.println(Config.currentPlayerBullet instanceof PlayerSpreadingBullet);
+        enemyBulletManager = new BulletManager(this, () -> new EnemyBullet(this));
 
         SaveDataManager.createSaveGameBin();
         //SaveDataManager.retrieveSaveFileNames();

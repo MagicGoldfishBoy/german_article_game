@@ -24,7 +24,17 @@ public class BulletManager {
 
     public void spawnBullet(float x, float y, float deltaX, float deltaY) {
         Bullet bullet = bulletPool.obtain();
-        bullet.init(x, y, deltaX, deltaY);
+        if (bullet instanceof PlayerSpreadingBullet) {
+            bullet.init(x, y, deltaX, deltaY);
+            Bullet bullet_2 = bulletPool.obtain();
+            bullet_2.init(x, y, deltaX + 100, deltaY);
+            Bullet bullet_3 = bulletPool.obtain();
+            bullet_3.init(x, y, deltaX - 100, deltaY);
+            activeBullets.add(bullet_2);
+            activeBullets.add(bullet_3);
+        } else {
+            bullet.init(x, y, deltaX, deltaY);
+        }
         activeBullets.add(bullet);
     }
 
