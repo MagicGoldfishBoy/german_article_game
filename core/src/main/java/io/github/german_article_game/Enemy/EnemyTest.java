@@ -46,7 +46,7 @@ public class EnemyTest extends Enemy {
         this.game = game;                      
         this.movePatterns = new EnemyMovePatterns(this.game); 
 
-        this.bulletManager = game.bulletManager;
+        this.bulletManager = game.enemyBulletManager;
     }
 
     public void init(float x, float y, float deltaX, float deltaY) {
@@ -125,10 +125,14 @@ public class EnemyTest extends Enemy {
     }
 
     public void fireBullet() {
+        // bulletTimer = bulletDelay;
+        // Bullet bullet = new Enemy_Bullet(game);
+        // bullet.init(x + bboxWidth / 2.5f, y + bboxHeight, 0f, -Enemy_Bullet.bulletSpeed);
+        // game.entities.add(bullet);
         bulletTimer = bulletDelay;
-        Bullet bullet = new Enemy_Bullet(game);
-        bullet.init(x + bboxWidth / 2.5f, y + bboxHeight, 0f, -Enemy_Bullet.bulletSpeed);
-        game.entities.add(bullet);
+        game.enemyBulletManager.spawnBullet(
+        x + bboxWidth / 2.5f, y + bboxHeight, 0f, -Enemy_Bullet.bulletSpeed
+    );
     }
     
 }

@@ -79,7 +79,8 @@ public class TestMap implements Screen {
                 i.act(delta);
                 i.draw();
             };
-            player.bulletManager.updateAndRender(delta, game.batch);
+            game.bulletManager.updateAndRender(delta, game.batch);
+            game.enemyBulletManager.updateAndRender(delta, game.batch);
             Main.batch.end();
 
             if (Config.isDebugMode) {

@@ -1,27 +1,26 @@
 package io.github.german_article_game.Bullet;
 
+import java.util.function.Supplier;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.dongbat.jbump.World;
 
 import io.github.german_article_game.Main;
 
 public class BulletManager {
     private final Array<Bullet> activeBullets = new Array<>();
-    private final Main game;
+    private final Pool<Bullet> bulletPool;
 
-    public BulletManager(Main game) {
-        this.game = game;
+    public BulletManager(Main game, Supplier<Bullet> bulletFactory) {
+        this.bulletPool = new Pool<Bullet>() {
+            @Override
+            protected Bullet newObject() {
+                return bulletFactory.get();
+            }
+        };
     }
-
-    private final Pool<Bullet> bulletPool = new Pool<Bullet>() {
-        @Override
-        protected Bullet newObject() {
-            return new Bullet(game);
-        }
-    };
 
     public void spawnBullet(float x, float y, float deltaX, float deltaY) {
         Bullet bullet = bulletPool.obtain();
@@ -40,5 +39,11 @@ public class BulletManager {
                 bullet.draw();
             }
         }
+    }
+
+    /** Call on screen dispose/teardown to release everything cleanly. */
+    public void dispose() {
+        activeBullets.clear();
+        bulletPool.clear();
     }
 }

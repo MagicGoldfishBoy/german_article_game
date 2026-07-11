@@ -104,7 +104,7 @@ public class Bullet extends Entity {
 
     protected void destroyBullet() {
         alive = false;
-        game.entities.removeValue(this, true);
+        //game.entities.removeValue(this, true);
         if (item != null) {
             game.world.remove(item);
             item = null;
