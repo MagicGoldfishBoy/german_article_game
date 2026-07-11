@@ -104,35 +104,37 @@ public class EnemyTest extends Enemy {
 
         if (bulletTimer > 0) {
             bulletTimer -= delta;
-            if (bulletTimer <= 0f) {
-                bulletTimer = bulletDelay;
+            if (bulletTimer > 0.142f) {
                 fireBullet();
+            }
+            if (bulletTimer <= 0f) {
+                fireDiagonalBullet(100);
+                fireDiagonalBullet(50);
+                fireDiagonalBullet(-100);
+                fireDiagonalBullet(-50);
             }
         }
 
         if (bulletTimer == 0) {
-            fireBullet();
+            bulletTimer = bulletDelay;
         }
-
-        if (bulletTimer == 0.10f) {
-            fireBullet();
-        }
-
-
 
         animationTime += delta;
         onStageTime += delta;}
     }
 
     public void fireBullet() {
-        // bulletTimer = bulletDelay;
-        // Bullet bullet = new Enemy_Bullet(game);
-        // bullet.init(x + bboxWidth / 2.5f, y + bboxHeight, 0f, -Enemy_Bullet.bulletSpeed);
-        // game.entities.add(bullet);
         bulletTimer = bulletDelay;
         game.enemyBulletManager.spawnBullet(
         x + bboxWidth / 2.5f, y + bboxHeight, 0f, -Enemy_Bullet.bulletSpeed
-    );
+        );
+    }
+
+    public void fireDiagonalBullet(float angle) {
+        bulletTimer = bulletDelay;
+        game.enemyBulletManager.spawnBullet(
+        x + bboxWidth / 2.5f, y + bboxHeight, angle, -Enemy_Bullet.bulletSpeed
+        );
     }
     
 }
