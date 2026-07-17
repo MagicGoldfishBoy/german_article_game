@@ -10,8 +10,8 @@ import com.badlogic.gdx.utils.Pool;
 import io.github.german_article_game.Main;
 
 public class BulletManager {
-    private final Array<Bullet> activeBullets = new Array<>();
-    private final Pool<Bullet> bulletPool;
+    final Array<Bullet> activeBullets = new Array<>();
+    final Pool<Bullet> bulletPool;
 
     public BulletManager(Main game, Supplier<Bullet> bulletFactory) {
         this.bulletPool = new Pool<Bullet>() {
@@ -24,17 +24,19 @@ public class BulletManager {
 
     public void spawnBullet(float x, float y, float deltaX, float deltaY) {
         Bullet bullet = bulletPool.obtain();
-        if (bullet instanceof PlayerSpreadingBullet) {
-            bullet.init(x, y, deltaX, deltaY);
-            Bullet bullet_2 = bulletPool.obtain();
-            bullet_2.init(x, y, deltaX + 100, deltaY);
-            Bullet bullet_3 = bulletPool.obtain();
-            bullet_3.init(x, y, deltaX - 100, deltaY);
-            activeBullets.add(bullet_2);
-            activeBullets.add(bullet_3);
-        } else {
-            bullet.init(x, y, deltaX, deltaY);
-        }
+        // if (bullet instanceof PlayerSpreadingBullet) {
+        //     bullet.init(x, y, deltaX, deltaY);
+        //     Bullet bullet_2 = bulletPool.obtain();
+        //     bullet_2.init(x, y, deltaX + 100, deltaY);
+        //     Bullet bullet_3 = bulletPool.obtain();
+        //     bullet_3.init(x, y, deltaX - 100, deltaY);
+        //     activeBullets.add(bullet_2);
+        //     activeBullets.add(bullet_3);
+        // } else {
+        //     bullet.init(x, y, deltaX, deltaY);
+        // }
+        bullet.init(x, y, deltaX, deltaY);
+        bullet.onSpawn(this);
         activeBullets.add(bullet);
     }
 

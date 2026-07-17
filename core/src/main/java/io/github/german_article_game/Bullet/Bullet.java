@@ -60,6 +60,10 @@ public class Bullet extends Entity {
         game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
     }
 
+    public void onSpawn(BulletManager manager) {
+        this.alive = true;
+    }
+
     @Override
     public void act(float delta) {
         if (!alive || item == null) {
