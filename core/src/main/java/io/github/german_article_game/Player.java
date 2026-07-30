@@ -27,6 +27,8 @@ public class Player extends Entity {
     final Main game;
     BulletManager bulletManager;
 
+    public Integer maxHp;
+
     public Player(Main game) {
         this.game = game;   // store the real instance passed in
         this.animation = playerAnimation;
@@ -37,6 +39,7 @@ public class Player extends Entity {
         this.bboxX = (animation.getKeyFrame(1).getRegionWidth() - this.bboxWidth) / 2;
         this.bboxY = (animation.getKeyFrame(1).getRegionHeight() - this.bboxHeight) / 2;
         this.hp = 100;
+        this.maxHP = 100;
         item = new Item<>(this);
         this.game.world.add(item, x + bboxX, y + bboxY, bboxWidth, bboxHeight);
 
@@ -53,6 +56,13 @@ public class Player extends Entity {
            // this.die();
         }
         System.out.println(this.hp);
+    }
+
+    public void heal(Integer health) {
+        this.hp += health;
+        if (this.hp > this.maxHP) {
+            this.hp = this.maxHP;
+        }
     }
 
     @Override

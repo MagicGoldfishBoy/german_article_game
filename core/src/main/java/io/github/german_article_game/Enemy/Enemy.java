@@ -24,6 +24,8 @@ public abstract class Enemy extends Entity {
 
     Bullet bullet;
 
+    public Float onStageTime;
+
     public Enemy (Main game) {
 
         this.game = game;
@@ -47,6 +49,11 @@ public abstract class Enemy extends Entity {
             game.world.remove(item);
             item = null;
         }
+    }
+
+    public void act(float delta) {
+        animationTime += delta;
+        onStageTime += delta;
     }
 
     public static class enemyCollisionFilter implements CollisionFilter {
