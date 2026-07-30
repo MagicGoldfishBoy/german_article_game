@@ -64,34 +64,28 @@ public class Player extends Entity {
         boolean fire = Gdx.input.isKeyJustPressed(Config.fireKey);
 
         Float direction = null;
-
-        if (left || right || up || down) {
-            if (left || right) {
-                if (left) {
-                    direction = 180f;
-                    if (up) direction = 135f;
-                    else if (down) direction = 225f;
+        if (!game.isPaused) {
+            if (left || right || up || down) {
+                if (left || right) {
+                    if (left) {
+                        direction = 180f;
+                        if (up) direction = 135f;
+                        else if (down) direction = 225f;
+                    } else {
+                        direction = 0f;
+                        if (up) direction = 45f;
+                        else if (down) direction = 315f;
+                    }
                 } else {
-                    direction = 0f;
-                    if (up) direction = 45f;
-                    else if (down) direction = 315f;
+                    if (up) direction = 90f;
+                    else if (down) direction = 270f;
                 }
-            } else {
-                if (up) direction = 90f;
-                else if (down) direction = 270f;
+            }
+        
+            if (fire) {      
+                bulletManager.spawnBullet(x + animation.getKeyFrame(1).getRegionWidth() / 2.5f, y + bboxHeight, 0f, Bullet.bulletSpeed);
             }
         }
-
-        if (fire) {
-            
-            bulletManager.spawnBullet(x + animation.getKeyFrame(1).getRegionWidth() / 2.5f, y + bboxHeight, 0f, Bullet.bulletSpeed);
-            // Bullet bullet = new Player_Bullet(game);
-            // bullet.x = x + animation.getKeyFrame(1).getRegionWidth() / 2.5f;
-            // bullet.y = y + bboxHeight;
-            // game.entities.add(bullet);
-            // game.world.update(bullet.item, bullet.x + bullet.bboxX, bullet.y + bullet.bboxY);
-        }
-
         if (direction != null) {
             x += MathUtils.cosDeg(direction) * SPEED * delta;
             y += MathUtils.sinDeg(direction) * SPEED * delta;

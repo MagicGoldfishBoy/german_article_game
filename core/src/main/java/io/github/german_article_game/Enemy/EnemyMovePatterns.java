@@ -50,7 +50,6 @@ public class EnemyMovePatterns {
         options = patternGraph.getEdges(current);
     }
 
-    // The graph's vertices/edges only need to be built ONE time
     private static synchronized void initGraphOnce() {
         if (graphInitialized) return;
         for (Pattern p : Pattern.values()) {

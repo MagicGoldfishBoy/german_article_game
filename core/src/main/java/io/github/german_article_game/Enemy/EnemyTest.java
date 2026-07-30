@@ -78,11 +78,8 @@ public class EnemyTest extends Enemy {
         }
         if (!game.isPaused) {
             
-        
-
         //direction = movePatterns.leftAndRight(this, game);
-        //this.movePatterns.dispatch(this, game);
-        //
+
         if (onStageTime < 5f) {
            this.movePatterns.oval(this, 150, 50, 5);      
         }
@@ -93,7 +90,6 @@ public class EnemyTest extends Enemy {
            this.movePatterns.figureEight(this, 200, 2);
         }
              
-        //EnemyMovePatterns.dispatch(this, game);
         if (direction != null) {
             x += MathUtils.cosDeg(direction) * speed * delta;
             y += MathUtils.sinDeg(direction) * speed * delta;
@@ -120,8 +116,10 @@ public class EnemyTest extends Enemy {
             bulletTimer = bulletDelay;
         }
 
+        onStageTime += delta;
+        
+        }
         animationTime += delta;
-        onStageTime += delta;}
     }
 
     public void fireBullet() {
