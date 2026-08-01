@@ -53,7 +53,10 @@ public abstract class Enemy extends Entity {
 
     public void act(float delta) {
         animationTime += delta;
-        onStageTime += delta;
+        if (!game.isPaused) {
+            onStageTime += delta;  
+        }
+        
     }
 
     public static class enemyCollisionFilter implements CollisionFilter {

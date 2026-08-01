@@ -31,3 +31,38 @@ player-normal
   orig: 25, 45
   offset: 0, 0
   index: -1
+katze-normal
+  rotate: false
+  xy: 0, 45
+  size: 25, 45
+  orig: 25, 45
+  offset: 0, 0
+  index: -1
+katze-normal
+  rotate: false
+  xy: 25, 45
+  size: 25, 45
+  orig: 25, 45
+  offset: 0, 0
+  index: -1
+katze-normal
+  rotate: false
+  xy: 50, 45
+  size: 25, 45
+  orig: 25, 45
+  offset: 0, 0
+  index: -1
+katze-normal
+  rotate: false
+  xy: 75, 45
+  size: 25, 45
+  orig: 25, 45
+  offset: 0, 0
+  index: -1
+katze-normal
+  rotate: false
+  xy: 100, 45
+  size: 25, 45
+  orig: 25, 45
+  offset: 0, 0
+  index: -1

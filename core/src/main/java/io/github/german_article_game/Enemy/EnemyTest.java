@@ -16,13 +16,10 @@ import io.github.german_article_game.Bullet.Bullet;
 import io.github.german_article_game.Bullet.BulletManager;
 import io.github.german_article_game.Bullet.EnemyBullet;
 import io.github.german_article_game.Bullet.PlayerBullet;
+import io.github.german_article_game.Rescources.Animations;
 import io.github.german_article_game.Player.PlayerCollisionFilter;
 
 public class EnemyTest extends Enemy {
-
-    static TextureAtlas atlas = new TextureAtlas("animations/peopleskin.atlas");
-    public static final Animation<AtlasRegion> enemyAnimation =
-        new Animation<>(1.5f / 30f, atlas.findRegions("player-normal"), PlayMode.LOOP);
 
     final Main game;
     public EnemyMovePatterns movePatterns;
@@ -52,7 +49,7 @@ public class EnemyTest extends Enemy {
     public void init(float x, float y, float deltaX, float deltaY) {
         this.germanName = "Feind";
         this.englishName = "Enemy";
-        this.animation = enemyAnimation;
+        this.animation = Animations.katzeAnimation;
         this.x = 100;
         this.y = 300;
         this.bboxWidth = 25;

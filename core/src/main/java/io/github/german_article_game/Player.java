@@ -1,10 +1,6 @@
 package io.github.german_article_game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.Item;
@@ -15,12 +11,10 @@ import com.dongbat.jbump.Response.Result;
 import io.github.german_article_game.Bullet.Bullet;
 import io.github.german_article_game.Bullet.BulletManager;
 import io.github.german_article_game.Bullet.PlayerBullet;
+import io.github.german_article_game.Rescources.Animations;
 
 public class Player extends Entity {
-    static TextureAtlas atlas = new TextureAtlas("animations/peopleskin.atlas");
-    public static final Animation<AtlasRegion> playerAnimation =
-        new Animation<>(1.5f / 30f, atlas.findRegions("player-normal"), PlayMode.LOOP);
-
+    
     public static final float SPEED = 200f;
     PlayerBullet bullet;
 
@@ -31,7 +25,7 @@ public class Player extends Entity {
 
     public Player(Main game) {
         this.game = game;   // store the real instance passed in
-        this.animation = playerAnimation;
+        this.animation = Animations.playerAnimation;
         this.x = 100;
         this.y = 100;
         this.bboxWidth = 15;

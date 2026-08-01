@@ -11,7 +11,7 @@ import io.github.german_article_game.Player;
 import io.github.german_article_game.Enemy.Enemy;
 import io.github.german_article_game.Enemy.EnemyNoun;
 
-public class nounBullet extends EnemyBullet {
+public class NounBullet extends EnemyBullet {
 
     enum Gender {
         MALE,
@@ -23,7 +23,7 @@ public class nounBullet extends EnemyBullet {
 
     public EnemyNoun shooter;
 
-    public nounBullet(Main game) {
+    public NounBullet(Main game) {
         super(game);
     }
 
