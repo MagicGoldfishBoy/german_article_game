@@ -69,13 +69,13 @@ public class EnemyTest extends Enemy {
     @SuppressWarnings("unused")
     @Override
     public void act(float delta) {
-        Float direction = 0f;
+
         if (!game.world.hasItem(item)) {
             return;
         }
         if (!game.isPaused) {
-            
-        //direction = movePatterns.leftAndRight(this, game);
+
+        Float initialY = this.y;
 
         if (onStageTime < 5f) {
            this.movePatterns.oval(this, 150, 50, 5);      
@@ -86,11 +86,14 @@ public class EnemyTest extends Enemy {
         if (onStageTime >= 10f) {
            this.movePatterns.figureEight(this, 200, 2);
         }
-             
-        if (direction != null) {
-            x += MathUtils.cosDeg(direction) * speed * delta;
-            y += MathUtils.sinDeg(direction) * speed * delta;
+
+        if (initialY >= this.y) {
+            System.out.println("moving left");
         }
+        else {
+            System.out.println("moving right");
+        }
+
         Result result = game.world.move(item, x + bboxX, y + bboxY, enemyCollisionFilter.instance);
         Rect rect = game.world.getRect(item);
         if (rect != null) {
