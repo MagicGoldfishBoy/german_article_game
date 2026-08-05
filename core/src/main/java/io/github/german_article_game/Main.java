@@ -1,5 +1,7 @@
 package io.github.german_article_game;
 
+import java.util.List;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -18,27 +20,36 @@ import io.github.german_article_game.Bullet.BulletManager;
 import io.github.german_article_game.Bullet.EnemyBullet;
 import io.github.german_article_game.Bullet.PlayerBullet;
 import io.github.german_article_game.Bullet.PlayerSpreadingBullet;
+import io.github.german_article_game.Enemy.Enemy;
 import io.github.german_article_game.Enemy.EnemyMovePatterns;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
 
 	public static SpriteBatch batch;
+
 	public BitmapFont font;
 	public BitmapFont titleFont = FontGeneration.titleFont;
 	public BitmapFont buttonFont = FontGeneration.buttonFont;
+
     public static ExtendViewport gameplayViewport;
     public StretchViewport viewport;
+
     FreeTypeFontGenerator generator;
+
     Skin CurrentSkin;
+
     Stage stage;
+
     public World world;
-    public SnapshotArray entities;
+    public SnapshotArray<Entity> entities;
     public ShapeRenderer shapeRenderer;
     public EnemyMovePatterns enemyMovePatterns;
     public boolean isPaused;
     public BulletManager bulletManager;
     public BulletManager enemyBulletManager;
+
+    public List<Enemy> allEnemyList = new java.util.ArrayList<>();
 
     @Override
     public void create() {

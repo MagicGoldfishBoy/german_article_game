@@ -12,8 +12,8 @@ public abstract class EnemyNoun extends Enemy {
 
     public Gender gender;
 
-    public EnemyNoun(Main game) {
-        super(game);
+    public EnemyNoun(Main game, String germanName) {
+        super(game, germanName);
     }
 
     public String addArticle() {

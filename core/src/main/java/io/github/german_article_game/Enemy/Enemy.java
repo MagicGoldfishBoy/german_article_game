@@ -6,9 +6,7 @@ import com.dongbat.jbump.Response;
 
 import io.github.german_article_game.Entity;
 import io.github.german_article_game.Main;
-import io.github.german_article_game.Player;
 import io.github.german_article_game.Bullet.Bullet;
-import io.github.german_article_game.Player.PlayerCollisionFilter;
 
 public abstract class Enemy extends Entity {
 
@@ -26,9 +24,11 @@ public abstract class Enemy extends Entity {
 
     public Float onStageTime;
 
-    public Enemy (Main game) {
+    public Enemy (Main game, String germanName) {
 
         this.game = game;
+        this.germanName = germanName;
+        game.allEnemyList.add(this);
     }
 
     public void takeDamage(Integer damage) {
@@ -57,6 +57,11 @@ public abstract class Enemy extends Entity {
             onStageTime += delta;  
         }
         
+    }
+
+    @Override
+    public String toString() {
+        return this.germanName;
     }
 
     public static class enemyCollisionFilter implements CollisionFilter {

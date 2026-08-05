@@ -1,23 +1,13 @@
 package io.github.german_article_game.Enemy;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Rect;
 import com.dongbat.jbump.Response.Result;
-import com.dongbat.jbump.util.MathUtils;
-
 import io.github.german_article_game.Main;
 import io.github.german_article_game.Bullet.Bullet;
 import io.github.german_article_game.Bullet.BulletManager;
 import io.github.german_article_game.Bullet.EnemyBullet;
-import io.github.german_article_game.Bullet.PlayerBullet;
 import io.github.german_article_game.Rescources.Animations;
-import io.github.german_article_game.Player.PlayerCollisionFilter;
 
 public class EnemyTest extends Enemy {
 
@@ -38,8 +28,8 @@ public class EnemyTest extends Enemy {
 
     BulletManager bulletManager;
 
-    public EnemyTest(Main game) {
-        super(game);
+    public EnemyTest(Main game, String germanName) {
+        super(game, germanName);
         this.game = game;                      
         this.movePatterns = new EnemyMovePatterns(this.game); 
 

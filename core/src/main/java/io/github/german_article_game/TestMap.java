@@ -39,13 +39,14 @@ public class TestMap implements Screen {
         this.game = game;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void show() {
         entities = game.entities;
         world = game.world;
         shapeRenderer = game.shapeRenderer;
         player = new Player(game);
-        enemy = new EnemyTest(game);
+        enemy = new EnemyTest(game, "Feind");
         enemy.init(enemy.x, enemy.y, enemy.deltaX, enemy.deltaY);
     }
 
