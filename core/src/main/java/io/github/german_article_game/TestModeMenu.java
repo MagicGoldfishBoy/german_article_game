@@ -13,13 +13,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import dev.lyze.flexbox.FlexBox;
 import io.github.german_article_game.Enemy.Enemy;
+import io.github.german_article_game.Enemy.EnemyNoun;
 import io.github.german_article_game.Enemy.EnemyTest;
+import io.github.german_article_game.Enemy.Katze;
 import io.github.orioncraftmc.meditate.enums.YogaAlign;
 import io.github.orioncraftmc.meditate.enums.YogaEdge;
 import io.github.orioncraftmc.meditate.enums.YogaFlexDirection;
@@ -43,7 +46,7 @@ public class TestModeMenu implements Screen {
 
     FlexBox optionsFlexbox;
 
-    SelectBox<Array<Enemy>> enemySelectBox;
+    SelectBox<Enemy> enemySelectBox;
 
     Enemy selectedEnemy;
 
@@ -103,16 +106,11 @@ public class TestModeMenu implements Screen {
             .setAlignItems(YogaAlign.FLEX_START)              
             .setJustifyContent(YogaJustify.FLEX_START);
         game.stage.addActor(optionsFlexbox);
-
-        //game.allEnemyList.size();
-        if (selectedEnemy == null) {
-           EnemyTest enemyTest = new EnemyTest(game, "Feind"); 
-           selectedEnemy = enemyTest;
-        }
         
         if (game.allEnemyList != null) {
             enemySelectBox = new SelectBox<>(CurrentSkin);
             Array<Enemy> items = new Array<>();
+            System.out.println("All Enemy List: " + game.allEnemyList);
             game.allEnemyList.forEach(items::add);
             enemySelectBox.setItems(items);
             enemySelectBox.setName("Select Enemy");
@@ -120,6 +118,8 @@ public class TestModeMenu implements Screen {
                 .setWidthPercent(30)
                 .setHeightPercent(10)
                 .setMarginPercent(YogaEdge.BOTTOM, 2);
+
+            enemySelectBox.addListener(enemySelectBoxChangeListener);
         }
     }
 
@@ -128,6 +128,14 @@ public class TestModeMenu implements Screen {
         public void clicked(InputEvent event, float x, float y) {
             dispose();
             game.setScreen(new SaveSelectMenu(game));
+        }
+    };
+
+    ChangeListener enemySelectBoxChangeListener = new ChangeListener() {
+        @Override
+        public void changed(ChangeEvent event, com.badlogic.gdx.scenes.scene2d.Actor actor) {
+            selectedEnemy = enemySelectBox.getSelected();
+            System.out.println(selectedEnemy);
         }
     };
 

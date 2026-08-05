@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.dongbat.jbump.World;
+//import io.github.classgraph.ClassGraph;
 
 import io.github.german_article_game.Bullet.BulletManager;
 import io.github.german_article_game.Bullet.EnemyBullet;
@@ -106,6 +107,24 @@ public class Main extends Game {
 
         setScreen(new MainMenu(this));
     }
+
+    // private void spawnAllEnemyTypes() {
+    //     try (ScanResult scan = new ClassGraph()
+    //             .enableClassInfo()
+    //             .acceptPackages("io.github.german_article_game.Enemy")
+    //             .scan()) {
+
+    //         for (ClassInfo ci : scan.getSubclasses(Enemy.class.getName())) {
+    //             if (ci.isAbstract()) continue;
+    //             try {
+    //                 Class<? extends Enemy> cls = ci.loadClass(Enemy.class);
+    //                 cls.getConstructor(Main.class).newInstance(this);
+    //             } catch (Exception e) {
+    //                 Gdx.app.error("Main", "Failed to instantiate " + ci.getName(), e);
+    //             }
+    //         }
+    //     }
+    // }
 
     public void render() {
 		super.render();

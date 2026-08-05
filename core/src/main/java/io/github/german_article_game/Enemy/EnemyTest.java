@@ -11,7 +11,6 @@ import io.github.german_article_game.Rescources.Animations;
 
 public class EnemyTest extends Enemy {
 
-    final Main game;
     public EnemyMovePatterns movePatterns;
 
     public Bullet bulletType;
@@ -29,8 +28,7 @@ public class EnemyTest extends Enemy {
     BulletManager bulletManager;
 
     public EnemyTest(Main game, String germanName) {
-        super(game, germanName);
-        this.game = game;                      
+        super(game, germanName);                
         this.movePatterns = new EnemyMovePatterns(this.game); 
 
         this.bulletManager = game.enemyBulletManager;
